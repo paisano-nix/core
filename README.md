@@ -17,63 +17,79 @@ To type outputs, an output type system is provided and traits (i.e. "abstract be
 ## Motivation
 
 Nix flakes make it easy to create self-contained projects with a common top-level interface that has been standardized througout the Nix Community.
-However, as an upstream standard, it was built (mostly) for the packaging use case of Nix in the context of small package-centric repositories.
-It therefore is less suited for a DevOps centric usage pattern of Nix.
+However, as an upstream standard it was built (mostly) for the packaging use case of Nix in the context of small package-centric repositories.
+It is, therefore, less suited for a DevOps centric usage pattern.
 
 With Paisano, we attempt to solve the following problems:
 
 - **Internal code boundaries**:
   Nix isn't typed and doesn't itself impose any opinion on how to organize code.
-  It also doesn't know a module system in the sense of a classical programming language, in which modules are often folder-based encapsulation of functionality.
+  It also doesn't define a module system in the same sense as a typical programming language, in which modules are often folder-based encapsulation of functionality.
   
-  Therefore, Nix forces its users to make a significant upfront investment in designing theri code layout.
-  Unfortunately, due to the planning overhead that this entails, many users won't choose to do that.
-  Over longer time horizons, Nix code seen in the wild tends in our experience to loose clarity and organization.
+  Therefore, Nix forces its users to make a significant upfront investment in designing their code layout.
+  Unfortunately, due to the planning overhead that this entails, many users may just skip out on Nix for this reason alone.
+  Over longer time horizons, Nix code seen in the wild tends, in our experience, to lose clarity and organization.
   
-  Paisano addresses this problem by simple, clear, yet extensible, calling conventions on its module importer interface.
+  Paisano addresses this problem by simple, clear, and extensible calling conventions on its module importer interface.
 
 - **Ease of refactoring**:
-  Multiplicity of interaces and needlessly bespoke calling conventions make semantic code refactoring unnecessarily hard.
+  In many a Nix codebase, a multiplicity of interaces, coupled with needlessly bespoke calling conventions make semantic code refactoring unnecessarily difficult.
   
-  By enforcing a single, but powerful, calling convention for its importer and as a project grows, Paisano makes semantic refactoring as straigth forward as possible.
+  In contrast, Paisano enforces a single, but powerful, calling convention for its importer. As a result, Paisano makes semantic refactoring straightforward as your project naturally grows.
 
 - **Shared mental structure**:
-  A bespoke code structure often comes with a hefty price tag in context switching costs.
-  Hoverer, in a DevOps scenario, it is not uncommon to deal with multiple and very diverse code bases.
+  A custom code structure often comes with a hefty price tag in terms of context switching between projects.
+  Yet, in a typical DevOps workflow, it is not uncommon to deal with multiple, diverse code bases.
   
-  By encouraging basic organizational principles (at least) in your (Nix) code, a future "self" or present "other" will be able to significantly lower their context switching costs.
+  By encouraging basic organizational principles (at least) in your (Nix) code, a future "self" or present "other" will be able to significantly lower their cognitive load,
+  leaving more time to get useful work done.
+
   
 - **Take out the guesswork**:
-  The cost of upfront design work in properly structuring your project combined with the above mentioned hurdles to refactoring are a high stake.
+  The costs of the upfront design work required to effectively structure your project, along with the above mentioned hurdles in code refactoring are simply too high.
+  And if that's not bad enough, the cost of making a mistake during this process is _even higher_, leading to more tedious work simply to make sense out of your existing code.
   
-  As a consequence, many projects evolve unguided and refactorings are postponed due to the effort they involve.
+  As a consequence, many (Nix) projects evolve unguided, with the heavy price of refactoring postponed.
+  This can quickly become a vicious cycle of ever growing spaghetti code, which is then more and more difficult to refactor as time goes on.
   
-  Paisano's meta-structure takes out the guesswork as much as possible while encouraging its users to think about their project's internal type system.
+  Paisano's meta-structure alleviates the guesswork considerably, enabling the user to spend their time creating a meaningful project type system.
+  It is this very system which allows time to focus on effectively solving your problem; the solution of which can then be mapped effortlessly over any related outputs, again and again.
+
+  In short, considerable effort is expendended to take the previously destructive feedback loop described above, and turn it into a highly productive one; allowing for quick _and_ correct (i.e. well-typed) iteration.
   
 - **Avoid level-creep**:
-  There is a tension between depth and breadth when organizing folder structures.
-  A deeply nested folder structure may be sometimes closer modeled after the problem domain.
-  However, a deeply nested folder sturcure isn't necessarily optimized for human consumption.
+  There is often a tension between depth and breadth when organizing the folder structure of your project.
+  A deeply nested scheme may sometimes map the problem domain more efficiently, but it isn't necessarily optimized for human consumption.
   
-  Paisano tries to find a balance between breadth and depth that readily accomodates every problem domain, yet doesn't compromise on readability.
+  Paisano tries to find a nice balance, which readily accomodates every problem domain without compromising readability.
+
+  We do this by offering an unambiguous model for structuring your code, which breaks down fairly simply as follows.
+
+  ### When you want:
+  - Breath &#8594; add a code block
+  - Depth &#8594; compose flakes
+
+  This creates a natural depth boundary at the repository level, since it is generally considered good practive to use one flake per project repository.
 
 ## Terminology
 
 - **Cells** &mdash; they are the first level in the folder structure and group related functionality together.
   An example from the microserivce use case would be a backend cell or a frontend cell.
    
-- **Block** &mdash; the next level in the folder structure are (typed) blocks that implement a collection of similar functionality.
-  An example, again from the microservice use case, would be several package and container variants for the backend.
+- **Block** &mdash; the next level in the folder structure are (typed) blocks that implement a collection of similar functionality, i.e. code modules (in other languages).
+  One could be labeled "tasks", another "packages", another "images", etc.
 
 - **Targets** &mdash; each block type can have one or more targets.
-  For example, one or more container images or one or more packages.
+  These are your concrete packages, container images, scripts, etc.
 
-- **Block Types & Actions** &mdash; blocks are typed.
-  This allows for example a platform or framework provider to implement shared functionality for their use cases.
-  That way, use case specific type systems can be implemented for example by platform engineers.
+- **Block Types & Actions** &mdash;
+  These are the types attached to the blocks mentioned above. They allow you to define arbitary actions which can be run over the specific targets contained in the associated block.
+  This allows a platform or framework provider to implement shared functionality for their particular use case, such as a single action which describes how to "push" container images to their registry.
+
+  This is really where Standard breaks away from the simple packaging pattern of Nix and allows you to define what you actually want to _do_ with those packages, artifacts, scripts, or images in a well-defined, boilerplate free way.
 
 - **Registry** &mdash; the registry extracts structured, yet json-serializable, data from our output type system and code structure.
-  Consumers such as CI, a CLI/TUI, or even a UI can access and extract that data for a tight integration with the respective target use cases.
+  Consumers such as CI, a CLI/TUI, or even a UI can access and extract that data for a tight integration with the respective target use cases. For a concrete example of a consumer, see [std-action](https://github.com/divnix/std-action).
   
 
 ## Regsitry Schema Spec
