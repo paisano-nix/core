@@ -108,12 +108,15 @@
             if l.typeOf block == "set"
             then block
             else block signature;
-          imported =
-            if isFile
-            then Target' oPath.file' (import' oPath.file' oPath.file)
-            else if isDir
-            then Target' oPath.dir' (import' oPath.dir' oPath.dir)
-            else throw "unreachable!";
+          imported = let
+            block =
+              if isFile
+              then oPath.file' (import' oPath.file' oPath.file)
+              else if isDir
+              then oPath.dir' (import' oPath.dir' oPath.dir)
+              else throw "unreachable!";
+          in
+            Target' (cellBlock.__type or null) block;
           # extract instatiates actions and extracts metadata for the __std registry
           extracted = l.optionalAttrs (cellBlock.cli or true) (l.mapAttrs (_extract cellBlock) imported);
         in
