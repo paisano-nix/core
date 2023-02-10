@@ -1,3 +1,6 @@
+/*
+This file validates and prorpocesses the grow function arguments.
+*/
 {
   l,
   types,

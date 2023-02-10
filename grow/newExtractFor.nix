@@ -1,3 +1,6 @@
+/*
+This file implements an extractor that feeds the registry.
+*/
 {
   l,
   paths,

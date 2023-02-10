@@ -1,3 +1,6 @@
+/*
+This file implements aggregation helper for collecting blocks.
+*/
 {l}: {
   accumulate =
     l.foldl'

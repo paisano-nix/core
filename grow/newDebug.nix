@@ -1,3 +1,6 @@
+/*
+This file implements the educational debug tracer.
+*/
 {l}: debug: s: attrs: let
   traceString = l.trace s;
   traceAttrs = l.traceSeqN 1 attrs;
