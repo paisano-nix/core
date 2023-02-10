@@ -55,7 +55,7 @@ With Paisano, we attempt to solve the following problems:
   Paisano's meta-structure alleviates the guesswork considerably, enabling the user to spend their time creating a meaningful project type system.
   It is this very system which allows time to focus on effectively solving your problem; the solution of which can then be mapped effortlessly over any related outputs, again and again.
 
-  In short, considerable effort is expendended to take the previously destructive feedback loop described above, and turn it into a highly productive one; allowing for quick _and_ correct (i.e. well-typed) iteration.
+  In short, considerable effort is expended to take the previously destructive feedback loop described above, and turn it into a highly productive one; allowing for quick _and_ correct (i.e. well-typed) iteration.
   
 - **Avoid level-creep**:
   There is often a tension between depth and breadth when organizing the folder structure of your project.
