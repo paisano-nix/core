@@ -16,9 +16,9 @@ rec {
       readme = "${cellPath'}/${cellBlock.name}/Readme.md";
     };
   targetPath = cellsFrom: cellName: cellBlock: let
-    cellBlockPath' = cellsFrom cellName cellBlock;
+    cellBlockPath' = cellBlockPath cellsFrom cellName cellBlock;
   in
     name: {
-      readme = "${cellBlockPath}/${name}.md";
+      readme = "${cellBlockPath'}/${name}.md";
     };
 }

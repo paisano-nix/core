@@ -11,7 +11,7 @@
         map
           (a: l.nameValuePair a.name a) (cellBlock.actions {
             inherit system target;
-            fragment = targetFragment;
+            fragment = ''"${system}"."${cellName}"."${cellBlock.name}"."${name}"'';
             fragmentRelPath = "${cellName}/${cellBlock.name}/${name}";
           })
       )
@@ -62,7 +62,7 @@ in {
     {
       inherit name;
       # for speed only extract name & description, the bare minimum for display
-      actions = map (a: {inherit (a) name description;}) actions';
+      actions = l.mapAttrsToList (name: a: {inherit name; inherit (a) description;}) actions';
     }
     // (l.optionalAttrs (l.pathExists tPath.readme) {inherit (tPath) readme;})
     // (l.optionalAttrs (target ? meta && target.meta ? description) {inherit (target.meta) description;});

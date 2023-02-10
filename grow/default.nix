@@ -5,11 +5,11 @@
   types,
 }: let
   inherit (types) Block Target;
-  makeImportSignatureFor = import ./make-import-signature.nix {inherit l deSystemize;};
-  makeExtractFor = import ./make-extract.nix {inherit l types paths;};
-  makeDebug = import ./make-debug.nix {inherit l;};
-  processCfg = import ./make-process-cfg.nix {inherit l types;};
-  helpers = import ./make-helpers.nix {inherit l;};
+  ImportSignatureFor = import ./newImportSignatureFor.nix {inherit l deSystemize;};
+  ExtractFor = import ./newExtractFor.nix {inherit l types paths;};
+  Debug = import ./newDebug.nix {inherit l;};
+  ProcessCfg = import ./newProcessCfg.nix {inherit l types;};
+  Helpers = import ./newHelpers.nix {inherit l;};
   /*
   A function that 'grows' Cell Blocks from Cells found in 'cellsFrom'.
 
@@ -73,22 +73,22 @@
     debug ? false,
     nixpkgsConfig ? {},
   }: let
-    inherit (processCfg {inherit cellBlocks systems cellsFrom;}) systems' cells' cellBlocks';
-    inherit (helpers) accumulate optionalLoad;
+    inherit (ProcessCfg {inherit cellBlocks systems cellsFrom;}) systems' cells' cellBlocks';
+    inherit (Helpers) accumulate optionalLoad;
 
     _debug = s: attrs:
       if debug == false
       then attrs
-      else makeDebug debug s attrs;
-    __makeImportSignatureFor = makeImportSignatureFor {inherit inputs nixpkgsConfig;};
-    ___extract = makeExtractFor cellsFrom;
+      else Debug debug s attrs;
+    __ImportSignatureFor = ImportSignatureFor {inherit inputs nixpkgsConfig;};
+    ___extract = ExtractFor cellsFrom;
 
     # List of all flake outputs injected by std in the outputs and inputs.cells format
     loadOutputFor = system: let
       __extract = ___extract system;
       # Load a cell, return the flake outputs injected by std
-      _makeImportSignatureFor = cell: {
-        inputs = _debug "inputs on ${system}" (__makeImportSignatureFor system res.output); # recursion on cells
+      _ImportSignatureFor = cell: {
+        inputs = _debug "inputs on ${system}" (__ImportSignatureFor system res.output); # recursion on cells
         inherit cell;
       };
       loadCellFor = cellName: let
@@ -103,7 +103,7 @@
             # since we're not really importing files within the framework
             # the non-memoization of scopedImport doesn't have practical penalty
             block = Block "paisano/import: ${path'}" (l.scopedImport signature path);
-            signature = _makeImportSignatureFor res.output; # recursion on cell
+            signature = _ImportSignatureFor res.output; # recursion on cell
           in
             if l.typeOf block == "set"
             then block
@@ -115,31 +115,31 @@
             then Target' oPath.dir' (import' oPath.dir' oPath.dir)
             else throw "unreachable!";
           # extract instatiates actions and extracts metadata for the __std registry
-          extracted = l.optionals (cellBlock.cli or true) (l.mapAttrsToList (_extract cellBlock) imported);
+          extracted = l.optionalAttrs (cellBlock.cli or true) (l.mapAttrs (_extract cellBlock) imported);
         in
           optionalLoad (isFile || isDir)
           [
             # top level output
             {${cellBlock.name} = imported;}
             # __std.actions (slow)
-            {${cellBlock.name} = l.listToAttrs (map (x: x.actions) extracted);}
+            {${cellBlock.name} = l.mapAttrs (_: set: set.actions) extracted;}
             # __std.init (fast)
             {
               init =
                 {
                   cellBlock = cellBlock.name;
                   blockType = cellBlock.type;
-                  targets = map (x: x.init) extracted;
+                  targets = l.mapAttrsToList (_: set: set.init) extracted;
                 }
                 // (l.optionalAttrs (l.pathExists oPath.readme) {inherit (oPath) readme;});
             }
             # __std.ci
             {
-              ci = map (x: x.ci) extracted;
+              ci = l.mapAttrsToList (_: set: set.ci) extracted;
             }
             # __std.ci'
             {
-              ci' = map (x: x.ci') extracted;
+              ci' = l.mapAttrsToList (_: set: set.ci') extracted;
             }
           ];
         res = accumulate (l.map loadCellBlock cellBlocks');
