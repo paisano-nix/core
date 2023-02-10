@@ -86,7 +86,7 @@ With Paisano, we attempt to solve the following problems:
   These are the types attached to the blocks mentioned above. They allow you to define arbitary actions which can be run over the specific targets contained in the associated block.
   This allows a platform or framework provider to implement shared functionality for their particular use case, such as a single action which describes how to "push" container images to their registry.
 
-  This is really where Standard breaks away from the simple packaging pattern of Nix and allows you to define what you actually want to _do_ with those packages, artifacts, scripts, or images in a well-defined, boilerplate free way.
+  This is really where Paisano breaks away from the simple packaging pattern of Nix and allows you to define what you actually want to _do_ with those packages, artifacts, scripts, or images in a well-defined, boilerplate free way.
 
 - **Registry** &mdash; the registry extracts structured, yet json-serializable, data from our output type system and code structure.
   Consumers such as CI, a CLI/TUI, or even a UI can access and extract that data for a tight integration with the respective target use cases. For a concrete example of a consumer, see [std-action](https://github.com/divnix/std-action).
