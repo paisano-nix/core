@@ -5,7 +5,7 @@ This file implements an extractor that feeds the registry.
   l,
   paths,
   types,
-}: cellsFrom: system: cellName: cellBlock: name: target: let
+}: cellsFrom: system: cellName: cellBlock: targetTracer: name: target: let
   tPath = paths.targetPath cellsFrom cellName cellBlock name;
   actions' =
     if cellBlock ? actions
@@ -62,6 +62,7 @@ in {
   inherit ci ci';
   actions = l.mapAttrs (_: a: a.command) actions';
   init =
+    targetTracer name
     {
       inherit name;
       # for speed only extract name & description, the bare minimum for display

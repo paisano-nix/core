@@ -3,8 +3,7 @@
   cellPath,
   cellBlockPath,
 }: cellsFrom: cellBlocks: cell: type: let
-  cPath = cellPath cellsFrom cell;
-  path = o: cellBlockPath cellsFrom cell o;
+  path = cellBlockPath (cellPath cellsFrom cell);
   atLeastOneCellBlock = l.any (x: x) (
     l.map (
       o: l.pathExists (path o).file || l.pathExists (path o).dir

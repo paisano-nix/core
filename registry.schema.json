@@ -38,13 +38,7 @@
         "cell": { "type": "string", "description": "The cell name." },
         "name": { "type": "string", "description": "The target name." }
       },
-      "required": [
-        "action",
-        "block",
-        "blockType",
-        "cell",
-        "name"
-      ]
+      "required": ["action", "block", "blockType", "cell", "name"]
     },
     "ci-task-prime": {}
   },
@@ -83,42 +77,47 @@
     "init": {
       "title": "Init",
       "description": "The representational metadata about the Standardized repository.",
-      "type": "array",
-      "items": {
-        "title": "Cell",
-        "description": "The representational data of a cell.",
-        "type": "object",
-        "required": ["cell", "cellBlocks"],
-        "properties": {
-          "cell": { "type": "string" },
-          "cellBlocks": {
-            "type": "array",
-            "items": {
-              "title": "Block",
-              "description": "The representational data of a block.",
-              "type": "object",
-              "required": ["blockType", "cellBlock", "targets"],
-              "properties": {
-                "blockType": { "type": "string" },
-                "cellBlock": { "type": "string" },
-                "targets": {
-                  "type": "array",
-                  "items": {
-                    "title": "Target",
-                    "description": "The representational data of a target.",
-                    "type": "object",
-                    "required": ["name", "actions"],
-                    "properties": {
-                      "name": { "type": "string" },
-                      "actions": {
-                        "type": "array",
-                        "items": {
-                          "title": "Action",
-                          "description": "The representational data of an action (w/o derivation).",
-                          "type": "object",
-                          "properties": {
-                            "name": { "type": "string" },
-                            "description": { "type": "string" }
+      "type": "object",
+      "additionalProperties": {
+        "title": "System",
+        "description": "For evaluation economy, init is namespaced by system.",
+        "type": "array",
+        "items": {
+          "title": "Cell",
+          "description": "The representational data of a cell.",
+          "type": "object",
+          "required": ["cell", "cellBlocks"],
+          "properties": {
+            "cell": { "type": "string" },
+            "cellBlocks": {
+              "type": "array",
+              "items": {
+                "title": "Block",
+                "description": "The representational data of a block.",
+                "type": "object",
+                "required": ["blockType", "cellBlock", "targets"],
+                "properties": {
+                  "blockType": { "type": "string" },
+                  "cellBlock": { "type": "string" },
+                  "targets": {
+                    "type": "array",
+                    "items": {
+                      "title": "Target",
+                      "description": "The representational data of a target.",
+                      "type": "object",
+                      "required": ["name", "actions"],
+                      "properties": {
+                        "name": { "type": "string" },
+                        "actions": {
+                          "type": "array",
+                          "items": {
+                            "title": "Action",
+                            "description": "The representational data of an action (w/o derivation).",
+                            "type": "object",
+                            "properties": {
+                              "name": { "type": "string" },
+                              "description": { "type": "string" }
+                            }
                           }
                         }
                       }

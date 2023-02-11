@@ -29,7 +29,7 @@ This file implements aggregation helper for collecting blocks.
         // (
           if third == null
           then {inherit (acc) init;}
-          else {init = acc.init ++ (l.concatMap (t: l.flatten t.init) [third]);}
+          else {init = acc.init ++ [third];}
         )
         // (
           if fourth == null

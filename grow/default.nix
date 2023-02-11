@@ -93,29 +93,33 @@
       };
       loadCellFor = cellName: let
         _extract = __extract cellName;
-        cPath = paths.cellPath cellsFrom cellName;
+        cellP = paths.cellPath cellsFrom cellName;
         loadCellBlock = cellBlock: let
-          oPath = paths.cellBlockPath cellsFrom cellName cellBlock;
-          isFile = l.pathExists oPath.file;
-          isDir = l.pathExists oPath.dir;
-          Target' = path': Target "paisano/import: ${path'}"; # TODO: implement lazy target block type checks
-          import' = path': path: let
+          blockP = paths.cellBlockPath cellP cellBlock;
+          isFile = l.pathExists blockP.file;
+          isDir = l.pathExists blockP.dir;
+          import' = {displayPath, importPath}: let
             # since we're not really importing files within the framework
             # the non-memoization of scopedImport doesn't have practical penalty
-            block = Block "paisano/import: ${path'}" (l.scopedImport signature path);
+            block =
+              Block "paisano/import: ${displayPath}"
+              (l.scopedImport signature importPath);
             signature = _ImportSignatureFor res.output; # recursion on cell
           in
             if l.typeOf block == "set"
             then block
             else block signature;
-          imported =
+          importPaths =
             if isFile
-            then Target' oPath.file' (import' oPath.file' oPath.file)
+            then {displayPath = blockP.file'; importPath = blockP.file;}
             else if isDir
-            then Target' oPath.dir' (import' oPath.dir' oPath.dir)
+            then {displayPath = blockP.dir'; importPath = blockP.dir;}
             else throw "unreachable!";
+          Target' = {displayPath, ...}: Target "paisano/import: ${displayPath}";
+          imported = Target' importPaths (import' importPaths);
           # extract instatiates actions and extracts metadata for the __std registry
-          extracted = l.optionalAttrs (cellBlock.cli or true) (l.mapAttrs (_extract cellBlock) imported);
+          targetTracer = name: l.traceVerbose "Paisano loading for ${system} ${importPaths.importPath}:${name}";
+          extracted = l.optionalAttrs (cellBlock.cli or true) (l.mapAttrs (_extract cellBlock targetTracer) imported);
         in
           optionalLoad (isFile || isDir)
           [
@@ -124,15 +128,14 @@
             # __std.actions (slow)
             {${cellBlock.name} = l.mapAttrs (_: set: set.actions) extracted;}
             # __std.init (fast)
-            {
-              init =
-                {
-                  cellBlock = cellBlock.name;
-                  blockType = cellBlock.type;
-                  targets = l.mapAttrsToList (_: set: set.init) extracted;
-                }
-                // (l.optionalAttrs (l.pathExists oPath.readme) {inherit (oPath) readme;});
-            }
+            (
+              {
+                cellBlock = cellBlock.name;
+                blockType = cellBlock.type;
+                targets = l.mapAttrsToList (_: set: set.init) extracted;
+              }
+              // (l.optionalAttrs (l.pathExists blockP.readme) {inherit (blockP) readme;})
+            )
             # __std.ci
             {
               ci = l.mapAttrsToList (_: set: set.ci) extracted;
@@ -149,14 +152,13 @@
         # __std.actions (slow)
         {${cellName} = res.actions;}
         # __std.init (fast)
-        {
-          init =
-            {
-              cell = cellName;
-              cellBlocks = res.init; # []
-            }
-            // (l.optionalAttrs (l.pathExists cPath.readme) {inherit (cPath) readme;});
-        }
+        (
+          {
+            cell = cellName;
+            cellBlocks = res.init; # []
+          }
+          // (l.optionalAttrs (l.pathExists cellP.readme) {inherit (cellP) readme;})
+        )
         # __std.ci
         {
           inherit (res) ci;
@@ -173,7 +175,10 @@
       # __std.actions (slow)
       {${system} = res.actions;}
       # __std.init (fast)
-      {inherit (res) init;}
+      {
+        name = system;
+        value = res.init;
+      }
       # __std.ci
       {
         ci = [
@@ -195,13 +200,13 @@
     ];
     res = accumulate (l.map loadOutputFor systems');
   in
-    assert l.assertMsg ((l.compareVersions l.nixVersion "2.9.2") >= 0) "The truth is: you'll need a newer nix version (minimum: v2.9.2).";
+    assert l.assertMsg ((l.compareVersions l.nixVersion "2.10.3") >= 0) "The truth is: you'll need a newer nix version (minimum: v2.10.3).";
     res.output
     // {
       __std.__schema = "v0";
       __std.ci = l.listToAttrs res.ci;
       __std.ci' = l.listToAttrs res.ci';
-      __std.init = l.unique res.init;
+      __std.init =  l.listToAttrs res.init;
       __std.actions = res.actions;
       __std.cellsFrom = l.baseNameOf cellsFrom;
     };
