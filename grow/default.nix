@@ -98,32 +98,32 @@
           oPath = paths.cellBlockPath cellsFrom cellName cellBlock;
           isFile = l.pathExists oPath.file;
           isDir = l.pathExists oPath.dir;
-          Target' = path': Target "paisano/import: ${path'}"; # TODO: implement lazy target block type checks
-          import' = path': path: let
+          import' = {displayPath, importPath} let
             # since we're not really importing files within the framework
             # the non-memoization of scopedImport doesn't have practical penalty
-            block = Block "paisano/import: ${path'}" (l.scopedImport signature path);
+            block = Block "paisano/import: ${displayPath}" (l.scopedImport signature importPath);
             signature = _ImportSignatureFor res.output; # recursion on cell
           in
             if l.typeOf block == "set"
             then block
             else block signature;
-          imported = let
-            block =
-              if isFile
-              then oPath.file' (import' oPath.file' oPath.file)
-              else if isDir
-              then oPath.dir' (import' oPath.dir' oPath.dir)
-              else throw "unreachable!";
-          in
-            Target' (cellBlock.__type or null) block;
+          importPaths =
+            if isFile
+            then {displayPath = oPath.file'; importPath = oPath.file;}
+            else if isDir
+            then {displayPath = oPath.dir'; importPath = oPath.dir;}
+            else throw "unreachable!";
+          Target' = {displayPath, ...}: Target "paisano/import: ${displayPath}";
+          imported = import' importPaths;
+          # type checked import
+          imported' = Target' importPaths ((cellBlock.type or null) imported);
           # extract instatiates actions and extracts metadata for the __std registry
-          extracted = l.optionalAttrs (cellBlock.cli or true) (l.mapAttrs (_extract cellBlock) imported);
+          extracted = l.optionalAttrs (cellBlock.cli or true) (l.mapAttrs (_extract cellBlock) imported');
         in
           optionalLoad (isFile || isDir)
           [
             # top level output
-            {${cellBlock.name} = imported;}
+            {${cellBlock.name} = imported';}
             # __std.actions (slow)
             {${cellBlock.name} = l.mapAttrs (_: set: set.actions) extracted;}
             # __std.init (fast)
