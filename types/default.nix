@@ -7,15 +7,15 @@
     inherit l;
     inherit (paths) cellPath cellBlockPath;
   };
-  Target = log:
-    with yants log;
-    # unfortunately eval during check can cause infinite recursions
-    # if blockType == "runnables" || blockType == "installables"
-    # then attrs drv
-    # else if blockType == "functions"
-    # then attrs function
-    # else throw "unreachable";
-      attrs any;
+  Target = log: type:
+    with yants log; let
+      type' =
+        # TODO: remove in the future and make a specific type a hard requirement
+        if type == null
+        then any
+        else type;
+    in
+      attrs type';
   Systems = log: with yants log; list (enum "system" l.systems.doubles.all);
   BlockTypes = log:
     with yants log;
@@ -25,6 +25,7 @@
         __functor = option function;
         ci = option (attrs bool);
         cli = option bool;
+        type = option type;
         actions = option (functionWithArgs {
           system = false;
           target = false;
