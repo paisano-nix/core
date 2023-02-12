@@ -116,7 +116,7 @@
           Target' = {displayPath, ...}: Target "paisano/import: ${displayPath}";
           imported = import' importPaths;
           # type checked import
-          imported' = Target' importPaths ((cellBlock.type or null) imported);
+          imported' = Target' importPaths ((cellBlock.__type or null) imported);
           # extract instatiates actions and extracts metadata for the __std registry
           extracted = l.optionalAttrs (cellBlock.cli or true) (l.mapAttrs (_extract cellBlock) imported');
         in

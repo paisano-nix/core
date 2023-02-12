@@ -22,10 +22,10 @@
       list (struct "cellBlock" {
         name = string;
         type = string;
+        __type = option type;
         __functor = option function;
         ci = option (attrs bool);
         cli = option bool;
-        type = option type;
         actions = option (functionWithArgs {
           system = false;
           target = false;
