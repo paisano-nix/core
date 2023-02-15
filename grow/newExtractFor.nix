@@ -23,7 +23,7 @@ This file implements an extractor that feeds the registry.
     if cellBlock ? ci
     then
       l.mapAttrsToList (action: _:
-        if ! l.hasAttrs action actions'
+        if ! l.hasAttr action actions'
         then
           throw ''
             divnix/std(ci-integration): Block Type '${cellBlock.type}' has no '${action}' Action defined.
@@ -43,7 +43,7 @@ This file implements an extractor that feeds the registry.
   ci' = let
     f = set: let
       action' = actions'.${set.action};
-      action = action.command;
+      action = action'.command;
     in
       assert l.assertMsg (l.isDerivation action) ''
         action must be a derivation. Please file a bug in divnix/paisano if you hit this line.
