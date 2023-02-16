@@ -4,7 +4,7 @@ SPDX-FileCopyrightText: 2022 The Standard Authors
 SPDX-License-Identifier: Unlicense
 -->
 
-# Divnix Paisano
+# Paisano Core
 
 _Organize your Flakes-based projects_
 
