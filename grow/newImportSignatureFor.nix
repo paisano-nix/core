@@ -20,6 +20,12 @@ in
       cells = deSystemize system cells; # recursion on cells
     }
     // l.optionalAttrs (cfg.inputs ? nixpkgs) {
-      nixpkgs = instantiateNixpkgsWith system;
+      nixpkgs =
+        (instantiateNixpkgsWith system)
+        //
+        # mimick deSystemize behaviour
+        (builtins.mapAttrs
+          (system: _: instantiateNixpkgsWith system)
+          cfg.inputs.nixpkgs.legacyPackages);
     }
   )
