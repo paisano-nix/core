@@ -73,12 +73,14 @@
     __ImportSignatureFor = ImportSignatureFor {inherit inputs nixpkgsConfig;};
     ___extract = ExtractFor cellsFrom;
 
+    cells = res.output; # recursion on cells (with system)
+
     # List of all flake outputs injected by std in the outputs and inputs.cells format
     loadOutputFor = system: let
       __extract = ___extract system;
       # Load a cell, return the flake outputs injected by std
       _ImportSignatureFor = cell: {
-        inputs = __ImportSignatureFor system res.output; # recursion on cells
+        inputs = __ImportSignatureFor system cells;
         inherit cell;
       };
       loadCellFor = cellName: let
