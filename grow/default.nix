@@ -7,7 +7,6 @@
   inherit (types) Block Target;
   ImportSignatureFor = import ./newImportSignatureFor.nix {inherit l deSystemize;};
   ExtractFor = import ./newExtractFor.nix {inherit l types paths;};
-  Debug = import ./newDebug.nix {inherit l;};
   ProcessCfg = import ./newProcessCfg.nix {inherit l types;};
   Helpers = import ./newHelpers.nix {inherit l;};
   /*
@@ -43,10 +42,6 @@
   you aren't doing cross-compilation, search for the upstream bug.
   It's there! Guaranteed!
 
-  Debugging? You can gain a better understanding of the `inputs` argument by
-  declaring the debug attribute for example like so: `debug = ["inputs" "yants"];`.
-  A tracer will give you more context about what's in it for you.
-
   Finally, there are a couple of special inputs:
 
   - `inputs.cells` - all other cells, deSystemized
@@ -70,16 +65,11 @@
       "x86_64-darwin"
       "aarch64-darwin"
     ],
-    debug ? false,
     nixpkgsConfig ? {},
   }: let
     inherit (ProcessCfg {inherit cellBlocks systems cellsFrom;}) systems' cells' cellBlocks';
     inherit (Helpers) accumulate optionalLoad;
 
-    _debug = s: attrs:
-      if debug == false
-      then attrs
-      else Debug debug s attrs;
     __ImportSignatureFor = ImportSignatureFor {inherit inputs nixpkgsConfig;};
     ___extract = ExtractFor cellsFrom;
 
@@ -88,7 +78,7 @@
       __extract = ___extract system;
       # Load a cell, return the flake outputs injected by std
       _ImportSignatureFor = cell: {
-        inputs = _debug "inputs on ${system}" (__ImportSignatureFor system res.output); # recursion on cells
+        inputs = __ImportSignatureFor system res.output; # recursion on cells
         inherit cell;
       };
       loadCellFor = cellName: let
