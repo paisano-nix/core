@@ -26,10 +26,10 @@
         ci = option (attrs bool);
         cli = option bool;
         actions = option (functionWithArgs {
-          system = false;
           target = false;
           fragment = false;
           fragmentRelPath = false;
+          currentSystem = false;
         });
       });
   Block = log:

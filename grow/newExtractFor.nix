@@ -13,9 +13,12 @@ This file implements an extractor that feeds the registry.
       l.listToAttrs (
         map
           (a: l.nameValuePair a.name a) (cellBlock.actions {
-            inherit system target;
+            inherit target;
+            # in impure mode, detect the current system to run
+            # the action's executables themselves with correct arch
             fragment = ''"${system}"."${cellName}"."${cellBlock.name}"."${name}"'';
             fragmentRelPath = "${cellName}/${cellBlock.name}/${name}";
+            currentSystem = builtins.currentSystem or system;
           })
       )
     else {};
