@@ -13,13 +13,13 @@ This file implements an extractor that feeds the registry.
     then
       l.listToAttrs (
         map
-          (a: l.nameValuePair a.name a) (cellBlock.actions {
-            inherit target fragment;
-            fragmentRelPath = "${cellName}/${cellBlock.name}/${name}";
-            # in impure mode, detect the current system to run
-            # the action's executables themselves with correct arch
-            currentSystem = builtins.currentSystem or system;
-          })
+        (a: l.nameValuePair a.name a) (cellBlock.actions {
+          inherit target fragment;
+          fragmentRelPath = "${cellName}/${cellBlock.name}/${name}";
+          # in impure mode, detect the current system to run
+          # the action's executables themselves with correct arch
+          currentSystem = builtins.currentSystem or system;
+        })
       )
     else {};
   ci =
@@ -66,7 +66,12 @@ in {
     {
       inherit name;
       # for speed only extract name & description, the bare minimum for display
-      actions = l.mapAttrsToList (name: a: {inherit name; inherit (a) description;}) actions';
+      actions =
+        l.mapAttrsToList (name: a: {
+          inherit name;
+          inherit (a) description;
+        })
+        actions';
     }
     // (l.optionalAttrs (l.pathExists tPath.readme) {inherit (tPath) readme;})
     // (l.optionalAttrs (target ? meta && target.meta ? description) {inherit (target.meta) description;});

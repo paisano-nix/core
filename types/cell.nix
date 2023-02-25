@@ -12,24 +12,28 @@
   );
   cellsFrom' = "${l.baseNameOf cellsFrom}";
 
-  maxLenght = list:        builtins.foldl'          (max: v: if v > max then v else max)          0          list      ;
+  maxLenght = list:
+    builtins.foldl' (max: v:
+      if v > max
+      then v
+      else max)
+    0
+    list;
 
-  cellBlockNameLength = map ({ name, ... }: builtins.stringLength name) cellBlocks;
+  cellBlockNameLength = map ({name, ...}: builtins.stringLength name) cellBlocks;
   maxCellBlockNameLength = maxLenght cellBlockNameLength;
 
-  cellBlockTypeLength = map ({ type, ... }: builtins.stringLength type) cellBlocks;
+  cellBlockTypeLength = map ({type, ...}: builtins.stringLength type) cellBlocks;
   maxCellBlockTypeLength = maxLenght cellBlockTypeLength;
 
   pad = str: num:
-    if num > 0 then
-      pad "${str} " (num - 1)
-    else
-      str;
+    if num > 0
+    then pad "${str} " (num - 1)
+    else str;
   padl = str: num:
-    if num > 0 then
-      padl " ${str}" (num - 1)
-    else
-      str;
+    if num > 0
+    then padl " ${str}" (num - 1)
+    else str;
 in
   if type != "directory"
   then

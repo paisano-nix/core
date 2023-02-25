@@ -98,7 +98,10 @@
           blockP = paths.cellBlockPath cellP cellBlock;
           isFile = l.pathExists blockP.file;
           isDir = l.pathExists blockP.dir;
-          import' = {displayPath, importPath}: let
+          import' = {
+            displayPath,
+            importPath,
+          }: let
             # since we're not really importing files within the framework
             # the non-memoization of scopedImport doesn't have practical penalty
             block =
@@ -111,9 +114,15 @@
             else block signature;
           importPaths =
             if isFile
-            then {displayPath = blockP.file'; importPath = blockP.file;}
+            then {
+              displayPath = blockP.file';
+              importPath = blockP.file;
+            }
             else if isDir
-            then {displayPath = blockP.dir'; importPath = blockP.dir;}
+            then {
+              displayPath = blockP.dir';
+              importPath = blockP.dir;
+            }
             else throw "unreachable!";
           Target' = {displayPath, ...}: Target "paisano/import: ${displayPath}";
           imported = Target' importPaths (import' importPaths);
@@ -201,15 +210,15 @@
     res = accumulate (l.map loadOutputFor systems');
   in
     assert l.assertMsg ((l.compareVersions l.nixVersion "2.10.3") >= 0) "The truth is: you'll need a newer nix version (minimum: v2.10.3).";
-    res.output
-    // {
-      __std.__schema = "v0";
-      __std.ci = l.listToAttrs res.ci;
-      __std.ci' = l.listToAttrs res.ci';
-      __std.init =  l.listToAttrs res.init;
-      __std.actions = res.actions;
-      __std.cellsFrom = l.baseNameOf cellsFrom;
-    };
+      res.output
+      // {
+        __std.__schema = "v0";
+        __std.ci = l.listToAttrs res.ci;
+        __std.ci' = l.listToAttrs res.ci';
+        __std.init = l.listToAttrs res.init;
+        __std.actions = res.actions;
+        __std.cellsFrom = l.baseNameOf cellsFrom;
+      };
 
   growOn = import ./grow-on.nix {inherit l grow;};
 in {inherit grow growOn;}
