@@ -16,10 +16,10 @@
     # then attrs function
     # else throw "unreachable";
       attrs any;
-  Systems = log: with yants log; list (enum "system" l.systems.doubles.all);
+  Systems = log: with yants log; list (enum "System" l.systems.doubles.all);
   BlockTypes = log:
     with yants log;
-      list (struct "cellBlock" {
+      list (struct "Cell Block" {
         name = string;
         type = string;
         __functor = option function;
@@ -44,5 +44,5 @@
           }
           block
       );
-  ActionCommand = with yants "std" "actions"; drv;
+  ActionCommand = log: with yants log; drv;
 }

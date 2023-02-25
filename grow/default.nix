@@ -66,8 +66,16 @@
       "aarch64-darwin"
     ],
     nixpkgsConfig ? {},
-  }: let
-    inherit (ProcessCfg {inherit cellBlocks systems cellsFrom;}) systems' cells' cellBlocks';
+  } @ cfg: let
+    # preserve pos of `systems` if not using the default
+    cfg' =
+      cfg
+      // (
+        if cfg ? systems
+        then {}
+        else {inherit systems;}
+      );
+    inherit (ProcessCfg cfg' inputs.self.sourceInfo) systems' cells' cellBlocks';
     inherit (Helpers) accumulate optionalLoad;
 
     __ImportSignatureFor = ImportSignatureFor {inherit inputs nixpkgsConfig;};

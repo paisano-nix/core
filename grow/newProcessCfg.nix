@@ -4,9 +4,13 @@ This file validates and prorpocesses the grow function arguments.
 {
   l,
   types,
-}: cfg: let
+}: cfg:
+# for showing the flake that has the problem
+sourceInfo: let
   inherit (types) BlockTypes Systems Cell;
   inherit (cfg) cellBlocks systems cellsFrom;
+  originFlake = "${sourceInfo}/flake.nix";
+  origin = key: (builtins.unsafeGetAttrPos key cfg).file or originFlake;
 in rec {
   cellBlocks' = let
     unique =
@@ -24,8 +28,8 @@ in rec {
       };
   in
     (unique
-      (BlockTypes "paisano/grow/args" cellBlocks))
+      (BlockTypes "${origin "cellBlocks"} - grow[On]:cellBlocks" cellBlocks))
     .result;
-  systems' = Systems "paisano/grow/args" systems;
-  cells' = l.mapAttrsToList (Cell cellsFrom cellBlocks') (l.readDir cellsFrom);
+  systems' = Systems "${origin "systems"} - grow[On]:systems" systems;
+  cells' = l.mapAttrsToList (Cell originFlake cellsFrom cellBlocks') (l.readDir cellsFrom);
 }

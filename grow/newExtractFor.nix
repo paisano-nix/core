@@ -7,17 +7,17 @@ This file implements an extractor that feeds the registry.
   types,
 }: cellsFrom: system: cellName: cellBlock: targetTracer: name: target: let
   tPath = paths.targetPath cellsFrom cellName cellBlock name;
+  fragment = ''"${system}"."${cellName}"."${cellBlock.name}"."${name}"'';
   actions' =
     if cellBlock ? actions
     then
       l.listToAttrs (
         map
           (a: l.nameValuePair a.name a) (cellBlock.actions {
-            inherit target;
+            inherit target fragment;
+            fragmentRelPath = "${cellName}/${cellBlock.name}/${name}";
             # in impure mode, detect the current system to run
             # the action's executables themselves with correct arch
-            fragment = ''"${system}"."${cellName}"."${cellBlock.name}"."${name}"'';
-            fragmentRelPath = "${cellName}/${cellBlock.name}/${name}";
             currentSystem = builtins.currentSystem or system;
           })
       )
@@ -46,11 +46,8 @@ This file implements an extractor that feeds the registry.
   ci' = let
     f = set: let
       action' = actions'.${set.action};
-      action = action'.command;
+      action = types.ActionCommand "Action \"${action'.name}\" of Cell Block \"${cellBlock.name}\" (Cell Block Type: \"${cellBlock.type}\")" action'.command;
     in
-      assert l.assertMsg (l.isDerivation action) ''
-        action must be a derivation. Please file a bug in divnix/paisano if you hit this line.
-      '';
       set
       // {
         targetDrv = action.targetDrv or target.drvPath or null; # can be null: nomad mainfests only hold data
