@@ -10,7 +10,8 @@ rec {
     file' = "${cellPath'.rel}/${cellBlock.name}.nix";
     dir = "${cellPath'}/${cellBlock.name}/default.nix";
     dir' = "${cellPath'.rel}/${cellBlock.name}/default.nix";
-    readme = "${cellPath'}/${cellBlock.name}/Readme.md";
+    readme = "${cellPath'}/${cellBlock.name}.md";
+    readmeDir = "${cellPath'}/${cellBlock.name}/Readme.md";
   };
   targetPath = cellsFrom: cellName: cellBlock: let
     cellBlockPath' = cellBlockPath (cellPath cellsFrom cellName) cellBlock;

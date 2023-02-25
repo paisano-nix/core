@@ -143,6 +143,7 @@
                 blockType = cellBlock.type;
                 targets = l.mapAttrsToList (_: set: set.init) extracted;
               }
+              // (l.optionalAttrs (l.pathExists blockP.readmeDir) {readme = blockP.readmeDir;})
               // (l.optionalAttrs (l.pathExists blockP.readme) {inherit (blockP) readme;})
             )
             # __std.ci
