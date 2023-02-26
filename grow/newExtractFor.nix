@@ -55,6 +55,9 @@ This file implements an extractor that feeds the registry.
       }
       // (
         l.optionalAttrs (action' ? proviso) {inherit (action') proviso;}
+      )
+      // (
+        l.optionalAttrs (action' ? meta) {inherit (action') meta;}
       );
   in
     map f ci;

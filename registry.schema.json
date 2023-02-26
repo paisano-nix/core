@@ -168,6 +168,10 @@
                 "proviso": {
                   "type": "string",
                   "description": "A provisio which lets a CI cheaply decide whether running an action can be skipped."
+                },
+                "meta": {
+                  "type": "string",
+                  "description": "Arbitrary metadata needed during the priviso or discovery."
                 }
               },
               "required": ["actionDrv"]
