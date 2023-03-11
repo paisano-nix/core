@@ -7,11 +7,15 @@ This file implements the unique import signature of each block.
 }: cfg: let
   self = cfg.inputs.self.sourceInfo // {rev = cfg.inputs.self.sourceInfo.rev or "not-a-commit";};
   instantiateNixpkgsWith = system:
-    (import cfg.inputs.nixpkgs {
-      inherit system;
-      config = cfg.nixpkgsConfig;
-    })
-    // {inherit (cfg.inputs.nixpkgs) sourceInfo;};
+    if cfg.nixpkgsConfig != {}
+    then
+      (import cfg.inputs.nixpkgs {
+        inherit system;
+        config = cfg.nixpkgsConfig;
+      })
+      // {inherit (cfg.inputs.nixpkgs) sourceInfo;}
+    # numtide/nixpkgs-unfree blocks re-import
+    else cfg.inputs.nixpkgs.legacyPackages.${system};
 in
   system: cells: (
     (deSystemize system cfg.inputs)
