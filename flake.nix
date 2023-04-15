@@ -39,7 +39,18 @@
     // {
       checks = namaka.lib.load {
         flake = self;
-        inputs = exports // {inputs = {inherit nixpkgs self;};};
+        inputs =
+          exports
+          // {
+            # simulate 'inputs'
+            inputs = {
+              inherit nixpkgs;
+              self.sourceInfo = {
+                outPath = "constant-self";
+                rev = "constant-rev";
+              };
+            };
+          };
       };
     };
 }
