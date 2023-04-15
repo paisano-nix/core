@@ -11,7 +11,7 @@
       (system:
         f (
           inputs.nixpkgs.legacyPackages.${system}.appendOverlays [inputs.devshell.overlays.default]
-          # // {namaka = inputs.main.inputs.namaka.packages.${system}.default;}
+          // {namaka = inputs.main.inputs.namaka.packages.${system}.default;}
         ));
     inherit (lib.stringsWithDeps) noDepEntry;
   in {
@@ -39,7 +39,7 @@
         name = "Paisano Core";
         imports = [checkMod];
         commands = [
-          # {package = pkgs.namaka;}
+          {package = pkgs.namaka;}
           {
             package = pkgs.cocogitto;
             name = "cog";
