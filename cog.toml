@@ -1,6 +1,6 @@
 post_bump_hooks = [
-  # "git push",
-  # "git push origin {{version}}",
+  "git push",
+  "git push origin {{version}}",
   "cog -q changelog --at {{version}}",
 ]
 
