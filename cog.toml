@@ -1,0 +1,13 @@
+post_bump_hooks = [
+  # "git push",
+  # "git push origin {{version}}",
+  "cog -q changelog --at {{version}}",
+]
+
+[changelog]
+path = "CHANGELOG.md"
+template = "remote"
+remote = "github.com"
+repository = "core"
+owner = "paisano-nix"
+authors = [{ username = "blaggacao", signature = "David Arnold" }]
