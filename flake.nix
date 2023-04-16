@@ -31,6 +31,7 @@
     paths = import ./paths.nix;
     types = import ./types {inherit l yants paths;};
     exports = {
+      inherit _grow;
       inherit (import ./soil {inherit l;}) pick harvest winnow;
       inherit (import ./grow {inherit l deSystemize paths types;}) grow growOn;
     };
