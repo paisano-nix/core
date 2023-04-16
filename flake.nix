@@ -32,24 +32,12 @@
     paths = import ./paths.nix;
     types = import ./types {inherit l yants paths;};
 
-    _grow = {
-      inputs,
-      cellsFrom,
-      cellBlocks,
-      systems ? [
-        "x86_64-linux"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "aarch64-darwin"
-      ],
-      nixpkgsConfig ? {},
-    } @ args: let
-      sprout = haumea.lib.load {
+    sprout = args:
+      haumea.lib.load {
         src = ./sprout;
-        inputs = args // {inherit haumea lib systems nixpkgsConfig;};
+        inputs = {inherit haumea lib args;};
+        # args // {inherit haumea lib systems nixpkgsConfig;};
       };
-    in
-      sprout.grow;
 
     soil = haumea.lib.load {
       src = ./soil;
@@ -59,7 +47,7 @@
     exports =
       soil
       // {
-        inherit _grow;
+        _grow = args: (sprout args).grow;
         inherit (import ./grow {inherit l deSystemize paths types;}) grow growOn;
       };
   in

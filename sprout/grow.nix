@@ -1,9 +1,9 @@
 {
   root,
   haumea,
-  cellsFrom,
 }: let
   inherit (root) flakeroot loader;
+  inherit (root.api) cellsFrom;
   inherit (haumea.lib.transformers) liftDefault;
 
   apex = flakeroot rootFor;

@@ -1,5 +1,5 @@
-{inputs}: let
-  inherit (inputs.self) sourceInfo;
+{root}: let
+  inherit (root.api.inputs.self) sourceInfo;
 in
   sourceInfo
   // {
