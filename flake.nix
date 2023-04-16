@@ -30,6 +30,25 @@
     deSystemize = nosys.lib.deSys;
     paths = import ./paths.nix;
     types = import ./types {inherit l yants paths;};
+    _grow = {
+      inputs,
+      cellsFrom,
+      cellBlocks,
+      systems ? [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ],
+      nixpkgsConfig ? {},
+    } @ args: let
+      lib = l;
+      sprout = haumea.lib.load {
+        src = ./sprout;
+        inputs = args // {inherit haumea lib systems nixpkgsConfig;};
+      };
+    in
+      sprout.grow;
     exports = {
       inherit _grow;
       inherit (import ./soil {inherit l;}) pick harvest winnow;
