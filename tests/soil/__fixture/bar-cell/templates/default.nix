@@ -1,0 +1,3 @@
+{
+  tmpl = "tmpl (no system)";
+}

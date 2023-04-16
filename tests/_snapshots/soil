@@ -1,0 +1,164 @@
+#pretty
+{
+  foo = {
+    aarch64-darwin = {
+      fan = "fan";
+      foo = "foo";
+      fox = "fox";
+    };
+    aarch64-linux = {
+      fan = "fan";
+      foo = "foo";
+      fox = "fox";
+    };
+    x86_64-darwin = {
+      fan = "fan";
+      foo = "foo";
+      fox = "fox";
+    };
+    x86_64-linux = {
+      fan = "fan";
+      foo = "foo";
+      fox = "fox";
+    };
+  };
+  fooAndBar = {
+    aarch64-darwin = {
+      fan = "fan";
+      foo = "foo";
+      fox = "fox";
+      fxa = "fxa";
+      fxn = "farri";
+      fxr = "fxr";
+    };
+    aarch64-linux = {
+      fan = "fan";
+      foo = "foo";
+      fox = "fox";
+      fxa = "fxa";
+      fxn = "farri";
+      fxr = "fxr";
+    };
+    x86_64-darwin = {
+      fan = "fan";
+      foo = "foo";
+      fox = "fox";
+      fxa = "fxa";
+      fxn = "farri";
+      fxr = "fxr";
+    };
+    x86_64-linux = {
+      fan = "fan";
+      foo = "foo";
+      fox = "fox";
+      fxa = "fxa";
+      fxn = "farri";
+      fxr = "fxr";
+    };
+  };
+  fooAndBar' = {
+    aarch64-darwin = {
+      fan = "fan";
+      foo = "foo";
+      fox = "fox";
+      fxa = "fxa";
+      fxr = "fxr";
+    };
+    aarch64-linux = {
+      fan = "fan";
+      foo = "foo";
+      fox = "fox";
+      fxa = "fxa";
+      fxr = "fxr";
+    };
+    x86_64-darwin = {
+      fan = "fan";
+      foo = "foo";
+      fox = "fox";
+      fxa = "fxa";
+      fxr = "fxr";
+    };
+    x86_64-linux = {
+      fan = "fan";
+      foo = "foo";
+      fox = "fox";
+      fxa = "fxa";
+      fxr = "fxr";
+    };
+  };
+  libToplevel = {
+    aarch64-darwin = {
+      foo-block = {
+        fan = "fan";
+        foo = "foo";
+        fox = "fox";
+      };
+    };
+    aarch64-linux = {
+      foo-block = {
+        fan = "fan";
+        foo = "foo";
+        fox = "fox";
+      };
+    };
+    x86_64-darwin = {
+      foo-block = {
+        fan = "fan";
+        foo = "foo";
+        fox = "fox";
+      };
+    };
+    x86_64-linux = {
+      foo-block = {
+        fan = "fan";
+        foo = "foo";
+        fox = "fox";
+      };
+    };
+  };
+  libToplevelAndHoistedChildren = {
+    aarch64-darwin = {
+      fan = "fan";
+      foo = "foo";
+      foo-block = {
+        fan = "fan";
+        foo = "foo";
+        fox = "fox";
+      };
+      fox = "fox";
+    };
+    aarch64-linux = {
+      fan = "fan";
+      foo = "foo";
+      foo-block = {
+        fan = "fan";
+        foo = "foo";
+        fox = "fox";
+      };
+      fox = "fox";
+    };
+    x86_64-darwin = {
+      fan = "fan";
+      foo = "foo";
+      foo-block = {
+        fan = "fan";
+        foo = "foo";
+        fox = "fox";
+      };
+      fox = "fox";
+    };
+    x86_64-linux = {
+      fan = "fan";
+      foo = "foo";
+      foo-block = {
+        fan = "fan";
+        foo = "foo";
+        fox = "fox";
+      };
+      fox = "fox";
+    };
+  };
+  templates = {
+    tmpl = "tmpl (no system)";
+  };
+}
