@@ -26,10 +26,12 @@
     yants,
     self,
   }: let
+    lib = l;
     l = nixpkgs.lib // builtins;
     deSystemize = nosys.lib.deSys;
     paths = import ./paths.nix;
     types = import ./types {inherit l yants paths;};
+
     _grow = {
       inputs,
       cellsFrom,
@@ -42,18 +44,24 @@
       ],
       nixpkgsConfig ? {},
     } @ args: let
-      lib = l;
       sprout = haumea.lib.load {
         src = ./sprout;
         inputs = args // {inherit haumea lib systems nixpkgsConfig;};
       };
     in
       sprout.grow;
-    exports = {
-      inherit _grow;
-      inherit (import ./soil {inherit l;}) pick harvest winnow;
-      inherit (import ./grow {inherit l deSystemize paths types;}) grow growOn;
+
+    soil = haumea.lib.load {
+      src = ./soil;
+      inputs = {inherit lib;};
     };
+
+    exports =
+      soil
+      // {
+        inherit _grow;
+        inherit (import ./grow {inherit l deSystemize paths types;}) grow growOn;
+      };
   in
     exports
     // {

@@ -1,4 +1,17 @@
-{l}: let
+{lib}: let
+  inherit
+    (lib)
+    isList
+    elemAt
+    mapAttrs
+    getAttrFromPath
+    filterAttrs
+    elem
+    hasAttrByPath
+    foldl'
+    recursiveUpdate
+    systems
+    ;
   /*
   A function that "up-lifts" your `std` targets.
 
@@ -20,28 +33,28 @@
   ```
   */
   winnow = pred: t: p: let
-    multiplePaths = l.isList (l.elemAt p 0);
+    multiplePaths = isList (elemAt p 0);
     hoist = path:
-      l.mapAttrs (
+      mapAttrs (
         _: v: let
-          attr = l.getAttrFromPath path v;
+          attr = getAttrFromPath path v;
         in
           # skip overhead if filtering is not needed
           if pred == true
           then attr
-          else l.filterAttrs pred attr
+          else filterAttrs pred attr
       )
       (
-        l.filterAttrs (
+        filterAttrs (
           n: v:
-            (l.elem n l.systems.doubles.all) # avoids infinit recursion
-            && (l.hasAttrByPath path v)
+            (elem n systems.doubles.all) # avoids infinit recursion
+            && (hasAttrByPath path v)
         )
         t
       );
   in
     if multiplePaths
-    then l.foldl' l.recursiveUpdate {} (map (path: hoist path) p)
+    then foldl' recursiveUpdate {} (map (path: hoist path) p)
     else hoist p;
 in
   winnow
