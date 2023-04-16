@@ -3,9 +3,13 @@
   inputs.nosys.url = "github:divnix/nosys";
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
   inputs.devshell.url = "github:numtide/devshell";
-  inputs.main.url = "path:../.";
-  outputs = inputs @ {nosys, ...}:
-    nosys (inputs.main.inputs // inputs) (
+  inputs.flake-compat.url = "github:edolstra/flake-compat?ref=refs/pull/55/head";
+  outputs = inputs @ {
+    nosys,
+    flake-compat,
+    ...
+  }:
+    nosys ((flake-compat ../.).inputs // inputs) (
       {
         self,
         namaka,
