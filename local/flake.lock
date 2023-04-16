@@ -65,7 +65,7 @@
       },
       "locked": {
         "lastModified": 0,
-        "narHash": "sha256-ZHp241gZgU7LwcZ7p1fgdm/RKhhdVlQUQ31zthZtX1s=",
+        "narHash": "sha256-sYq97Rx2jFEXcmMb6aQAn9DIaqmgnsLR7WqQHmCt050=",
         "path": "../.",
         "type": "path"
       },
@@ -83,11 +83,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1681406297,
-        "narHash": "sha256-nttEL4aSj6KunuqxFcxKrZ3NtfcUr9Dvz2lBB8bQME8=",
+        "lastModified": 1681604203,
+        "narHash": "sha256-oA/fW/85GmSNprghgAnZi0XeVMvW9xVuCYprzPw2hz0=",
         "owner": "nix-community",
         "repo": "namaka",
-        "rev": "0e7008a100617a8cc395544a03f4c0067100c929",
+        "rev": "1550ddc025334cff2e8ec9021256473b2ffb27e5",
         "type": "github"
       },
       "original": {
