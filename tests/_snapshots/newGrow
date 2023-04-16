@@ -1,0 +1,95 @@
+#pretty
+{
+  aarch64-darwin = {
+    bar-cell = {
+      test-block = {
+        self = "via foo-cell constant-self";
+      };
+    };
+    foo-cell = {
+      test-block = {
+        barCellBlockNames = [
+          "test-block"
+        ];
+        cellsNamesAndSystemsCrossCompilationEscapeHatch = [
+          "aarch64-darwin"
+          "aarch64-linux"
+          "bar-cell"
+          "foo-cell"
+          "x86_64-darwin"
+          "x86_64-linux"
+        ];
+        self = "via foo-cell constant-self";
+      };
+    };
+  };
+  aarch64-linux = {
+    bar-cell = {
+      test-block = {
+        self = "via foo-cell constant-self";
+      };
+    };
+    foo-cell = {
+      test-block = {
+        barCellBlockNames = [
+          "test-block"
+        ];
+        cellsNamesAndSystemsCrossCompilationEscapeHatch = [
+          "aarch64-darwin"
+          "aarch64-linux"
+          "bar-cell"
+          "foo-cell"
+          "x86_64-darwin"
+          "x86_64-linux"
+        ];
+        self = "via foo-cell constant-self";
+      };
+    };
+  };
+  x86_64-darwin = {
+    bar-cell = {
+      test-block = {
+        self = "via foo-cell constant-self";
+      };
+    };
+    foo-cell = {
+      test-block = {
+        barCellBlockNames = [
+          "test-block"
+        ];
+        cellsNamesAndSystemsCrossCompilationEscapeHatch = [
+          "aarch64-darwin"
+          "aarch64-linux"
+          "bar-cell"
+          "foo-cell"
+          "x86_64-darwin"
+          "x86_64-linux"
+        ];
+        self = "via foo-cell constant-self";
+      };
+    };
+  };
+  x86_64-linux = {
+    bar-cell = {
+      test-block = {
+        self = "via foo-cell constant-self";
+      };
+    };
+    foo-cell = {
+      test-block = {
+        barCellBlockNames = [
+          "test-block"
+        ];
+        cellsNamesAndSystemsCrossCompilationEscapeHatch = [
+          "aarch64-darwin"
+          "aarch64-linux"
+          "bar-cell"
+          "foo-cell"
+          "x86_64-darwin"
+          "x86_64-linux"
+        ];
+        self = "via foo-cell constant-self";
+      };
+    };
+  };
+}

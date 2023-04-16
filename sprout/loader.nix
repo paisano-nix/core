@@ -13,19 +13,19 @@
   inherit (haumea.lib.loaders) verbatim;
 in
   {
-    cell,
-    cells',
+    super,
+    root,
     system,
-    toplevel,
+    apex,
   }: let
     contract = {
-      inherit cell;
+      cell = super;
       inputs =
         mkInputs system
         // {
           inherit self;
           nixpkgs = mkNixpkgs system;
-          cells = cells' // (mkCells toplevel);
+          cells = mkCells root apex;
         };
     };
   in

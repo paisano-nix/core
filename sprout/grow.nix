@@ -3,23 +3,21 @@
   haumea,
   cellsFrom,
 }: let
-  inherit (root) forEachSystem loader;
-  inherit (haumea.lib) load;
+  inherit (root) flakeroot loader;
   inherit (haumea.lib.transformers) liftDefault;
 
-  toplevel = forEachSystem (
-    system:
-      load {
-        src = cellsFrom;
-        transformer = liftDefault;
-        loader = args:
-          loader {
-            inherit system;
-            inherit toplevel;
-            cell = args.super;
-            cells' = args.root;
-          };
-      }
-  );
+  apex = flakeroot rootFor;
+
+  rootFor = system:
+    haumea.lib.load {
+      src = cellsFrom;
+      transformer = liftDefault;
+      loader = args:
+        loader {
+          inherit system;
+          inherit apex;
+          inherit (args) super root;
+        };
+    };
 in
-  toplevel
+  apex

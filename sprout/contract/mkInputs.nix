@@ -1,8 +1,8 @@
 {
-  root,
+  super,
   inputs,
 }: let
-  inherit (root) deSystemize;
+  inherit (super) deSystemize;
 in
   system:
     deSystemize system inputs
