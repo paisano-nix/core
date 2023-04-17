@@ -3,7 +3,6 @@
     (args)
     inputs
     cellsFrom
-    cellBlocks
     ;
   systems =
     args.systems

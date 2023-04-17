@@ -36,7 +36,15 @@
       haumea.lib.load {
         src = ./sprout;
         inputs = {inherit haumea lib args;};
-        # args // {inherit haumea lib systems nixpkgsConfig;};
+      };
+
+    inherit (haumea.lib.transformers) liftDefault;
+
+    registry = args: apex:
+      haumea.lib.load {
+        src = ./registry;
+        inputs = {inherit lib args apex;};
+        transformer = liftDefault;
       };
 
     soil = haumea.lib.load {
@@ -47,7 +55,11 @@
     exports =
       soil
       // {
-        _grow = args: (sprout args).grow;
+        _grow = args: let
+          apex = (sprout args).grow;
+          reg = registry args apex;
+        in
+          apex // reg;
         inherit (import ./grow {inherit l deSystemize paths types;}) grow growOn;
       };
   in
