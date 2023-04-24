@@ -12,7 +12,7 @@
   );
   cellsFrom' = "${l.baseNameOf cellsFrom}";
 
-  maxLenght = list:
+  maxLength = list:
     builtins.foldl' (max: v:
       if v > max
       then v
@@ -21,10 +21,10 @@
     list;
 
   cellBlockNameLength = map ({name, ...}: builtins.stringLength name) cellBlocks;
-  maxCellBlockNameLength = maxLenght cellBlockNameLength;
+  maxCellBlockNameLength = maxLength cellBlockNameLength;
 
   cellBlockTypeLength = map ({type, ...}: builtins.stringLength type) cellBlocks;
-  maxCellBlockTypeLength = maxLenght cellBlockTypeLength;
+  maxCellBlockTypeLength = maxLength cellBlockTypeLength;
 
   pad = str: num:
     if num > 0
