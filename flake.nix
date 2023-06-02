@@ -66,7 +66,7 @@
     exports
     // {
       checks = namaka.lib.load {
-        flake = self;
+        src = ./tests;
         inputs =
           exports
           // {

@@ -2,7 +2,7 @@
   super,
   lib,
 }: let
-  inherit (lib) length elemAt;
+  inherit (lib) length elemAt isFunction;
   inherit (super) mapOverTree;
 
   isSystem = cursor: length cursor == 1;
@@ -22,22 +22,22 @@ in {
     ;
 
   __functor = _: {
-    onSystem,
+    onSystems,
     onCells,
     onBlocks,
     onTargets,
   }:
-    assert isFuncion onSystem "onSystem must be a function consuming it's own children";
-    assert isFuncion onCells "onCells must be a function consuming it's own children";
-    assert isFuncion onBlocks "onBlocks must be a function consuming it's own children";
-    # assert isFuncion onTargets "onTargets must not be a function as it ends recursion";
-      mapOverTree (cursor: children: value: (
-        if isSystem cursor
-        then onSytem cursor
-        else if isCell cursor
-        then onCells cursor
-        else if isBlock cursor
-        then onBlocks cursor
-        else onTargets cursor
-      ));
+  # assert (isFunction onSystem) "onSystem must be a function consuming it's own children";
+  # assert (isFunction onCells) "onCells must be a function consuming it's own children";
+  # assert (isFunction onBlocks) "onBlocks must be a function consuming it's own children";
+  # assert isFuncion onTargets "onTargets must not be a function as it ends recursion";
+    mapOverTree (cursor: children: value: (
+      if isSystem cursor
+      then onSystems cursor
+      else if isCell cursor
+      then onCells cursor
+      else if isBlock cursor
+      then onBlocks cursor
+      else onTargets cursor
+    ));
 }

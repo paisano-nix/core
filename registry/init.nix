@@ -3,7 +3,7 @@
   super,
   apex,
 }: let
-  inherit (lib) optionalAttrs pathExists findFirst;
+  inherit (lib) optionalAttrs pathExists findFirst attrValues;
   inherit (super) mapOverPaisanoTree resolveInit getReadmes;
   inherit (super.api) cellBlocks;
   inherit
