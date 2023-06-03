@@ -9,12 +9,10 @@ This file implements aggregation helper for collecting blocks.
         first = l.head new;
         second = l.head cdr;
         third = l.head cdr';
-        fourth = l.head cdr_;
-        tail = l.tail cdr_;
+        tail = l.tail cdr';
 
         cdr = l.tail new;
         cdr' = l.tail cdr;
-        cdr_ = l.tail cdr';
       in
         (
           if first == null
@@ -32,14 +30,9 @@ This file implements aggregation helper for collecting blocks.
           else {init = acc.init ++ [third];}
         )
         // (
-          if fourth == null
-          then {inherit (acc) ci;}
-          else {ci = acc.ci ++ (l.concatMap (t: l.flatten t.ci) [fourth]);}
-        )
-        // (
           if tail == [null]
-          then {inherit (acc) ci';}
-          else {ci' = acc.ci' ++ (l.concatMap (t: l.flatten t.ci') tail);}
+          then {inherit (acc) ci;}
+          else {ci = acc.ci ++ (l.concatMap (t: l.flatten t.ci) tail);}
         )
     )
     {
@@ -47,7 +40,6 @@ This file implements aggregation helper for collecting blocks.
       actions = {};
       init = [];
       ci = [];
-      ci' = []; # with drv (eval-costly)
     };
 
   optionalLoad = cond: elem:
@@ -58,6 +50,5 @@ This file implements aggregation helper for collecting blocks.
       null # empty action
       null # empty init
       null # empty ci
-      null # empty ci'
     ];
 }

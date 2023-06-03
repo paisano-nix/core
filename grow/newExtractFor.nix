@@ -25,44 +25,40 @@ This file implements an extractor that feeds the registry.
   ci =
     if cellBlock ? ci
     then
-      l.mapAttrsToList (action: _:
-        if ! l.hasAttr action actions'
-        then
-          throw ''
-            divnix/std(ci-integration): Block Type '${cellBlock.type}' has no '${action}' Action defined.
-            ---
-            ${l.generators.toPretty {} (l.removeAttrs cellBlock ["__functor"])}
-          ''
-        else {
-          inherit name;
-          cell = cellName;
-          block = cellBlock.name;
-          blockType = cellBlock.type;
-          inherit action;
-        })
+      l.mapAttrsToList (
+        action: _: let
+          action' = actions'.${action};
+          command = types.ActionCommand "Action \"${action'.name}\" of Cell Block \"${cellBlock.name}\" (Cell Block Type: \"${cellBlock.type}\")" action'.command;
+        in (
+          if ! l.hasAttr action actions'
+          then
+            throw ''
+              divnix/std(ci-integration): Block Type '${cellBlock.type}' has no '${action}' Action defined.
+              ---
+              ${l.generators.toPretty {} (l.removeAttrs cellBlock ["__functor"])}
+            ''
+          else
+            {
+              inherit name;
+              cell = cellName;
+              block = cellBlock.name;
+              blockType = cellBlock.type;
+              inherit action;
+              targetDrv = command.targetDrv or target.drvPath or null; # can be null: nomad mainfests only hold data
+              actionDrv = command.drvPath;
+            }
+            // (
+              l.optionalAttrs (action' ? proviso) {inherit (action') proviso;}
+            )
+            // (
+              l.optionalAttrs (action' ? meta) {inherit (action') meta;}
+            )
+        )
+      )
       cellBlock.ci
     else [];
-
-  ci' = let
-    f = set: let
-      action' = actions'.${set.action};
-      action = types.ActionCommand "Action \"${action'.name}\" of Cell Block \"${cellBlock.name}\" (Cell Block Type: \"${cellBlock.type}\")" action'.command;
-    in
-      set
-      // {
-        targetDrv = action.targetDrv or target.drvPath or null; # can be null: nomad mainfests only hold data
-        actionDrv = action.drvPath;
-      }
-      // (
-        l.optionalAttrs (action' ? proviso) {inherit (action') proviso;}
-      )
-      // (
-        l.optionalAttrs (action' ? meta) {inherit (action') meta;}
-      );
-  in
-    map f ci;
 in {
-  inherit ci ci';
+  inherit ci;
   actions = l.mapAttrs (_: a: a.command) actions';
   init =
     targetTracer name
