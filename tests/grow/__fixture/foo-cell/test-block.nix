@@ -2,7 +2,7 @@
   inputs,
   cell,
 }: {
-  self = "via foo-cell ${inputs.self}";
-  cellsNamesAndSystemsCrossCompilationEscapeHatch = builtins.attrNames inputs.cells;
-  barCellBlockNames = builtins.attrNames inputs.cells.bar-cell;
+  self = "foo-cell ${inputs.self}";
+  cells = builtins.attrNames inputs.cells;
+  barCell = builtins.attrNames inputs.cells.bar-cell;
 }

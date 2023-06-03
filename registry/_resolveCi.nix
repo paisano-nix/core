@@ -3,7 +3,7 @@
   super,
 }: let
   inherit (lib) nameValuePair mapAttrsToList mapNullable generators removeAttrs;
-  inherit (super) resolveActions;
+  inherit (super) resolveActions types;
   inherit (super.api) cellBlocks;
   inherit
     (super.mapOverPaisanoTree)
@@ -21,7 +21,7 @@ in
       mapAttrsToList (
         name: _: let
           action = actions.${name};
-          # action = types.ActionCommand "Action \"${action'.name}\" of Cell Block \"${cellBlock.name}\" (Cell Block Type: \"${cellBlock.type}\")" action'.command;
+          command = types.ActionCommand "Action \"${name}\" of Cell Block \"${getBlock cursor}\" (Cell Block Type: \"${type}\")" action.command;
         in
           if actions ? ${name}
           then {
@@ -30,8 +30,8 @@ in
             blockType = type;
             name = getTarget cursor; # TODO: cleanup
             action = name; # TODO: cleanup
-            targetDrv = action.command.targetDrv or target.drvPath or null; # can be null for e.g. data
-            actionDrv = action.command.drvPath;
+            targetDrv = command.targetDrv or target.drvPath or null; # can be null for e.g. data
+            actionDrv = command.drvPath;
             proviso = action.proviso or null;
             meta = action.meta or null;
           }

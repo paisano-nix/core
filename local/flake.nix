@@ -66,6 +66,10 @@
                   
                   grow
                   growOn
+                  # for unit testing
+                  
+                  _grow
+                  _registry
                   ;
               }
               # simulate 'inputs'

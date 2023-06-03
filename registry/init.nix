@@ -37,9 +37,10 @@ in
     onTargets = cr: target: let
       init = resolveInit cr target;
       readme = findFirst pathExists null (getReadmes cr);
+      targetTracer = name: lib.traceVerbose "Loading ${getSystem cr} {importPaths.importPath}:${name}";
     in
-      init
-      // (optionalAttrs (readme != null) {inherit readme;})
-      // (optionalAttrs (target ? meta && target.meta ? description) {inherit (target.meta) description;});
+      targetTracer init.name (init
+        // optionalAttrs (readme != null) {inherit readme;}
+        // optionalAttrs (target ? meta && target.meta ? description) {inherit (target.meta) description;});
   }
   apex

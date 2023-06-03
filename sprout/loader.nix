@@ -3,6 +3,7 @@
   lib,
   haumea,
 }: let
+  inherit (root) types;
   inherit
     (root.contract)
     self
@@ -10,7 +11,6 @@
     mkNixpkgs
     mkCells
     ;
-  inherit (haumea.lib.loaders) verbatim;
 in
   {
     super,
@@ -29,8 +29,10 @@ in
         };
     };
   in
-    lib.flip lib.pipe [
-      (lib.scopedImport contract)
-      (lib.toFunction) # may be a set
-      (f: f contract) # or has contract signature
-    ]
+    path:
+      lib.pipe path [
+        (lib.scopedImport contract)
+        (types.Block "paisano/import: ${path}")
+        (lib.toFunction) # may be a set
+        (f: f contract) # or has contract signature
+      ]

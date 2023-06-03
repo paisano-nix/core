@@ -1,0 +1,523 @@
+#pretty
+{
+  __schema = "v0";
+  actions = {
+    aarch64-darwin = {
+      bar-cell = {
+        test-block = {
+          self = {
+            foo-action = <derivation foo-action-command>;
+          };
+        };
+      };
+      foo-cell = {
+        test-block = {
+          barCellBlockNames = {
+            foo-action = <derivation foo-action-command>;
+          };
+          cellsNamesAndSystemsCrossCompilationEscapeHatch = {
+            foo-action = <derivation foo-action-command>;
+          };
+          self = {
+            foo-action = <derivation foo-action-command>;
+          };
+        };
+      };
+    };
+    aarch64-linux = {
+      bar-cell = {
+        test-block = {
+          self = {
+            foo-action = <derivation foo-action-command>;
+          };
+        };
+      };
+      foo-cell = {
+        test-block = {
+          barCellBlockNames = {
+            foo-action = <derivation foo-action-command>;
+          };
+          cellsNamesAndSystemsCrossCompilationEscapeHatch = {
+            foo-action = <derivation foo-action-command>;
+          };
+          self = {
+            foo-action = <derivation foo-action-command>;
+          };
+        };
+      };
+    };
+    x86_64-darwin = {
+      bar-cell = {
+        test-block = {
+          self = {
+            foo-action = <derivation foo-action-command>;
+          };
+        };
+      };
+      foo-cell = {
+        test-block = {
+          barCellBlockNames = {
+            foo-action = <derivation foo-action-command>;
+          };
+          cellsNamesAndSystemsCrossCompilationEscapeHatch = {
+            foo-action = <derivation foo-action-command>;
+          };
+          self = {
+            foo-action = <derivation foo-action-command>;
+          };
+        };
+      };
+    };
+    x86_64-linux = {
+      bar-cell = {
+        test-block = {
+          self = {
+            foo-action = <derivation foo-action-command>;
+          };
+        };
+      };
+      foo-cell = {
+        test-block = {
+          barCellBlockNames = {
+            foo-action = <derivation foo-action-command>;
+          };
+          cellsNamesAndSystemsCrossCompilationEscapeHatch = {
+            foo-action = <derivation foo-action-command>;
+          };
+          self = {
+            foo-action = <derivation foo-action-command>;
+          };
+        };
+      };
+    };
+  };
+  cellsFrom = "__fixture";
+  ci = {
+    aarch64-darwin = [
+      {
+        action = "foo-action";
+        actionDrv = "/nix/store/s7i0wrr49807zls7hwny0zdy0j8w1rm1-foo-action-command.drv";
+        block = "test-block";
+        blockType = "test-block-type";
+        cell = "bar-cell";
+        meta = null;
+        name = "self";
+        proviso = null;
+        targetDrv = null;
+      }
+      {
+        action = "foo-action";
+        actionDrv = "/nix/store/s7i0wrr49807zls7hwny0zdy0j8w1rm1-foo-action-command.drv";
+        block = "test-block";
+        blockType = "test-block-type";
+        cell = "foo-cell";
+        meta = null;
+        name = "barCellBlockNames";
+        proviso = null;
+        targetDrv = null;
+      }
+      {
+        action = "foo-action";
+        actionDrv = "/nix/store/s7i0wrr49807zls7hwny0zdy0j8w1rm1-foo-action-command.drv";
+        block = "test-block";
+        blockType = "test-block-type";
+        cell = "foo-cell";
+        meta = null;
+        name = "cellsNamesAndSystemsCrossCompilationEscapeHatch";
+        proviso = null;
+        targetDrv = null;
+      }
+      {
+        action = "foo-action";
+        actionDrv = "/nix/store/s7i0wrr49807zls7hwny0zdy0j8w1rm1-foo-action-command.drv";
+        block = "test-block";
+        blockType = "test-block-type";
+        cell = "foo-cell";
+        meta = null;
+        name = "self";
+        proviso = null;
+        targetDrv = null;
+      }
+    ];
+    aarch64-linux = [
+      {
+        action = "foo-action";
+        actionDrv = "/nix/store/vw6pn4q6naczjcjfww3d62i56hdwvn3g-foo-action-command.drv";
+        block = "test-block";
+        blockType = "test-block-type";
+        cell = "bar-cell";
+        meta = null;
+        name = "self";
+        proviso = null;
+        targetDrv = null;
+      }
+      {
+        action = "foo-action";
+        actionDrv = "/nix/store/vw6pn4q6naczjcjfww3d62i56hdwvn3g-foo-action-command.drv";
+        block = "test-block";
+        blockType = "test-block-type";
+        cell = "foo-cell";
+        meta = null;
+        name = "barCellBlockNames";
+        proviso = null;
+        targetDrv = null;
+      }
+      {
+        action = "foo-action";
+        actionDrv = "/nix/store/vw6pn4q6naczjcjfww3d62i56hdwvn3g-foo-action-command.drv";
+        block = "test-block";
+        blockType = "test-block-type";
+        cell = "foo-cell";
+        meta = null;
+        name = "cellsNamesAndSystemsCrossCompilationEscapeHatch";
+        proviso = null;
+        targetDrv = null;
+      }
+      {
+        action = "foo-action";
+        actionDrv = "/nix/store/vw6pn4q6naczjcjfww3d62i56hdwvn3g-foo-action-command.drv";
+        block = "test-block";
+        blockType = "test-block-type";
+        cell = "foo-cell";
+        meta = null;
+        name = "self";
+        proviso = null;
+        targetDrv = null;
+      }
+    ];
+    x86_64-darwin = [
+      {
+        action = "foo-action";
+        actionDrv = "/nix/store/dkvfg6ld1dkqlwdh263dggamrvw6a7ys-foo-action-command.drv";
+        block = "test-block";
+        blockType = "test-block-type";
+        cell = "bar-cell";
+        meta = null;
+        name = "self";
+        proviso = null;
+        targetDrv = null;
+      }
+      {
+        action = "foo-action";
+        actionDrv = "/nix/store/dkvfg6ld1dkqlwdh263dggamrvw6a7ys-foo-action-command.drv";
+        block = "test-block";
+        blockType = "test-block-type";
+        cell = "foo-cell";
+        meta = null;
+        name = "barCellBlockNames";
+        proviso = null;
+        targetDrv = null;
+      }
+      {
+        action = "foo-action";
+        actionDrv = "/nix/store/dkvfg6ld1dkqlwdh263dggamrvw6a7ys-foo-action-command.drv";
+        block = "test-block";
+        blockType = "test-block-type";
+        cell = "foo-cell";
+        meta = null;
+        name = "cellsNamesAndSystemsCrossCompilationEscapeHatch";
+        proviso = null;
+        targetDrv = null;
+      }
+      {
+        action = "foo-action";
+        actionDrv = "/nix/store/dkvfg6ld1dkqlwdh263dggamrvw6a7ys-foo-action-command.drv";
+        block = "test-block";
+        blockType = "test-block-type";
+        cell = "foo-cell";
+        meta = null;
+        name = "self";
+        proviso = null;
+        targetDrv = null;
+      }
+    ];
+    x86_64-linux = [
+      {
+        action = "foo-action";
+        actionDrv = "/nix/store/mgx2f363kv113s2fb004073bm813h89x-foo-action-command.drv";
+        block = "test-block";
+        blockType = "test-block-type";
+        cell = "bar-cell";
+        meta = null;
+        name = "self";
+        proviso = null;
+        targetDrv = null;
+      }
+      {
+        action = "foo-action";
+        actionDrv = "/nix/store/mgx2f363kv113s2fb004073bm813h89x-foo-action-command.drv";
+        block = "test-block";
+        blockType = "test-block-type";
+        cell = "foo-cell";
+        meta = null;
+        name = "barCellBlockNames";
+        proviso = null;
+        targetDrv = null;
+      }
+      {
+        action = "foo-action";
+        actionDrv = "/nix/store/mgx2f363kv113s2fb004073bm813h89x-foo-action-command.drv";
+        block = "test-block";
+        blockType = "test-block-type";
+        cell = "foo-cell";
+        meta = null;
+        name = "cellsNamesAndSystemsCrossCompilationEscapeHatch";
+        proviso = null;
+        targetDrv = null;
+      }
+      {
+        action = "foo-action";
+        actionDrv = "/nix/store/mgx2f363kv113s2fb004073bm813h89x-foo-action-command.drv";
+        block = "test-block";
+        blockType = "test-block-type";
+        cell = "foo-cell";
+        meta = null;
+        name = "self";
+        proviso = null;
+        targetDrv = null;
+      }
+    ];
+  };
+  init = {
+    aarch64-darwin = [
+      {
+        cell = "bar-cell";
+        cellBlocks = [
+          {
+            blockType = "test-block-type";
+            cellBlock = "test-block";
+            targets = [
+              {
+                actions = [
+                  {
+                    description = "paisano foo action";
+                    name = "foo-action";
+                  }
+                ];
+                name = "self";
+              }
+            ];
+          }
+        ];
+      }
+      {
+        cell = "foo-cell";
+        cellBlocks = [
+          {
+            blockType = "test-block-type";
+            cellBlock = "test-block";
+            targets = [
+              {
+                actions = [
+                  {
+                    description = "paisano foo action";
+                    name = "foo-action";
+                  }
+                ];
+                name = "barCellBlockNames";
+              }
+              {
+                actions = [
+                  {
+                    description = "paisano foo action";
+                    name = "foo-action";
+                  }
+                ];
+                name = "cellsNamesAndSystemsCrossCompilationEscapeHatch";
+              }
+              {
+                actions = [
+                  {
+                    description = "paisano foo action";
+                    name = "foo-action";
+                  }
+                ];
+                name = "self";
+              }
+            ];
+          }
+        ];
+      }
+    ];
+    aarch64-linux = [
+      {
+        cell = "bar-cell";
+        cellBlocks = [
+          {
+            blockType = "test-block-type";
+            cellBlock = "test-block";
+            targets = [
+              {
+                actions = [
+                  {
+                    description = "paisano foo action";
+                    name = "foo-action";
+                  }
+                ];
+                name = "self";
+              }
+            ];
+          }
+        ];
+      }
+      {
+        cell = "foo-cell";
+        cellBlocks = [
+          {
+            blockType = "test-block-type";
+            cellBlock = "test-block";
+            targets = [
+              {
+                actions = [
+                  {
+                    description = "paisano foo action";
+                    name = "foo-action";
+                  }
+                ];
+                name = "barCellBlockNames";
+              }
+              {
+                actions = [
+                  {
+                    description = "paisano foo action";
+                    name = "foo-action";
+                  }
+                ];
+                name = "cellsNamesAndSystemsCrossCompilationEscapeHatch";
+              }
+              {
+                actions = [
+                  {
+                    description = "paisano foo action";
+                    name = "foo-action";
+                  }
+                ];
+                name = "self";
+              }
+            ];
+          }
+        ];
+      }
+    ];
+    x86_64-darwin = [
+      {
+        cell = "bar-cell";
+        cellBlocks = [
+          {
+            blockType = "test-block-type";
+            cellBlock = "test-block";
+            targets = [
+              {
+                actions = [
+                  {
+                    description = "paisano foo action";
+                    name = "foo-action";
+                  }
+                ];
+                name = "self";
+              }
+            ];
+          }
+        ];
+      }
+      {
+        cell = "foo-cell";
+        cellBlocks = [
+          {
+            blockType = "test-block-type";
+            cellBlock = "test-block";
+            targets = [
+              {
+                actions = [
+                  {
+                    description = "paisano foo action";
+                    name = "foo-action";
+                  }
+                ];
+                name = "barCellBlockNames";
+              }
+              {
+                actions = [
+                  {
+                    description = "paisano foo action";
+                    name = "foo-action";
+                  }
+                ];
+                name = "cellsNamesAndSystemsCrossCompilationEscapeHatch";
+              }
+              {
+                actions = [
+                  {
+                    description = "paisano foo action";
+                    name = "foo-action";
+                  }
+                ];
+                name = "self";
+              }
+            ];
+          }
+        ];
+      }
+    ];
+    x86_64-linux = [
+      {
+        cell = "bar-cell";
+        cellBlocks = [
+          {
+            blockType = "test-block-type";
+            cellBlock = "test-block";
+            targets = [
+              {
+                actions = [
+                  {
+                    description = "paisano foo action";
+                    name = "foo-action";
+                  }
+                ];
+                name = "self";
+              }
+            ];
+          }
+        ];
+      }
+      {
+        cell = "foo-cell";
+        cellBlocks = [
+          {
+            blockType = "test-block-type";
+            cellBlock = "test-block";
+            targets = [
+              {
+                actions = [
+                  {
+                    description = "paisano foo action";
+                    name = "foo-action";
+                  }
+                ];
+                name = "barCellBlockNames";
+              }
+              {
+                actions = [
+                  {
+                    description = "paisano foo action";
+                    name = "foo-action";
+                  }
+                ];
+                name = "cellsNamesAndSystemsCrossCompilationEscapeHatch";
+              }
+              {
+                actions = [
+                  {
+                    description = "paisano foo action";
+                    name = "foo-action";
+                  }
+                ];
+                name = "self";
+              }
+            ];
+          }
+        ];
+      }
+    ];
+  };
+}

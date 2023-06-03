@@ -1,5 +1,5 @@
 {
-  l,
+  lib,
   cellPath,
   cellBlockPath,
 }: originFlake: cellsFrom: cellBlocks: cell: type: let

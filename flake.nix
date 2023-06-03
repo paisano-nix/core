@@ -42,11 +42,23 @@
   in
     soil
     // rec {
+      # for unit testing only
+
+      _registry = args: let
+        apex = (sprout args).grow;
+        reg = registry args apex;
+      in
+        reg;
+      _grow = args: (sprout args).grow;
+
+      # for consumers
+
       grow = args: let
         apex = (sprout args).grow;
         reg = registry args apex;
       in
         apex // {__std = reg;};
-      growOn = import ./grow-on.nix {inherit lib grow;};
+      growOn = args:
+        grow args // {__functor = lib.flip lib.recursiveUpdate;};
     };
 }

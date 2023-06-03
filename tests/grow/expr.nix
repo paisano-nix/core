@@ -1,9 +1,8 @@
 {
-  grow,
+  _grow,
   inputs,
 }:
-grow {
+_grow {
   inherit inputs;
   cellsFrom = ./__fixture;
-  cellBlocks = import ../__cellBlocks.nix inputs;
 }
