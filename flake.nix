@@ -2,14 +2,9 @@
 #
 # SPDX-License-Identifier: Unlicense
 {
-  inputs.nosys.url = "github:divnix/nosys";
   inputs.haumea = {
-    url = "github:nix-community/haumea";
+    url = "github:nix-community/haumea/v0.2.0";
     inputs.nixpkgs.follows = "nixpkgs";
-  };
-  inputs.namaka = {
-    url = "github:nix-community/namaka";
-    inputs.haumea.follows = "haumea";
   };
   inputs.yants = {
     url = "github:divnix/yants";
@@ -21,64 +16,37 @@
   outputs = {
     nixpkgs,
     haumea,
-    namaka,
-    nosys,
     yants,
     self,
   }: let
-    lib = l;
-    l = nixpkgs.lib // builtins;
-    deSystemize = nosys.lib.deSys;
-    paths = import ./paths.nix;
-    types = import ./types {inherit l yants paths;};
-
-    sprout = args:
-      haumea.lib.load {
-        src = ./sprout;
-        inputs = {inherit haumea lib args;};
-      };
-
+    inherit (haumea.lib) load;
     inherit (haumea.lib.transformers) liftDefault;
 
-    registry = args: apex:
-      haumea.lib.load {
-        src = ./registry;
-        inputs = {inherit lib args apex;};
+    lib = nixpkgs.lib // builtins;
+    sprout = args:
+      load {
+        src = ./sprout;
+        inputs = {inherit haumea lib args yants;};
         transformer = liftDefault;
       };
-
-    soil = haumea.lib.load {
+    registry = args: apex:
+      load {
+        src = ./registry;
+        inputs = {inherit lib args apex yants;};
+        transformer = liftDefault;
+      };
+    soil = load {
       src = ./soil;
       inputs = {inherit lib;};
     };
-
-    exports =
-      soil
-      // rec {
-        grow = args: let
-          apex = (sprout args).grow;
-          reg = registry args apex;
-        in
-          apex // {__std = reg;};
-        growOn = import ./grow-on.nix {inherit l grow;};
-      };
   in
-    exports
-    // {
-      checks = namaka.lib.load {
-        src = ./tests;
-        inputs =
-          exports
-          // {
-            # simulate 'inputs'
-            inputs = {
-              inherit nixpkgs;
-              self.sourceInfo = {
-                outPath = "constant-self";
-                rev = "constant-rev";
-              };
-            };
-          };
-      };
+    soil
+    // rec {
+      grow = args: let
+        apex = (sprout args).grow;
+        reg = registry args apex;
+      in
+        apex // {__std = reg;};
+      growOn = import ./grow-on.nix {inherit lib grow;};
     };
 }

@@ -7,57 +7,21 @@
         ]
       },
       "locked": {
-        "lastModified": 1681176209,
-        "narHash": "sha256-bJLDun6esIyWtwRVXcsgzGbh4UKu8wJDrPgykqPyzmg=",
+        "lastModified": 1681167397,
+        "narHash": "sha256-p2ZUoEsCNV35B/Gdi0b72rvopva4JJm1jeB1eqfN4wU=",
         "owner": "nix-community",
         "repo": "haumea",
-        "rev": "b915b66b27da3a595d77b139e945bb0a2fcac926",
+        "rev": "828fcac006f534f83071e5ed5b0280a5391aa95e",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
+        "ref": "v0.2.0",
         "repo": "haumea",
-        "type": "github"
-      }
-    },
-    "namaka": {
-      "inputs": {
-        "haumea": [
-          "haumea"
-        ],
-        "nixpkgs": "nixpkgs"
-      },
-      "locked": {
-        "lastModified": 1685739139,
-        "narHash": "sha256-CLGEW11Fo1v4vj0XSqiyW1EbhRZFO7dkgM43eKwItrk=",
-        "owner": "nix-community",
-        "repo": "namaka",
-        "rev": "d9a2cc83c1d0f68bd613f1fc909d0ef2cfffcf2e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "namaka",
         "type": "github"
       }
     },
     "nixpkgs": {
-      "locked": {
-        "lastModified": 1685655444,
-        "narHash": "sha256-6EujQNAeaUkWvpEZZcVF8qSfQrNVWFNNGbUJxv/A5a8=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "e635192892f5abbc2289eaac3a73cdb249abaefd",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_2": {
       "locked": {
         "lastModified": 1681571934,
         "narHash": "sha256-Q3B3HTqhTahhPCT53ahK1FPktOXlEWmudSttd9CWGbE=",
@@ -73,27 +37,10 @@
         "type": "github"
       }
     },
-    "nosys": {
-      "locked": {
-        "lastModified": 1668010795,
-        "narHash": "sha256-JBDVBnos8g0toU7EhIIqQ1If5m/nyBqtHhL3sicdPwI=",
-        "owner": "divnix",
-        "repo": "nosys",
-        "rev": "feade0141487801c71ff55623b421ed535dbdefa",
-        "type": "github"
-      },
-      "original": {
-        "owner": "divnix",
-        "repo": "nosys",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "haumea": "haumea",
-        "namaka": "namaka",
-        "nixpkgs": "nixpkgs_2",
-        "nosys": "nosys",
+        "nixpkgs": "nixpkgs",
         "yants": "yants"
       }
     },

@@ -1,5 +1,20 @@
 {
   "nodes": {
+    "call-flake": {
+      "locked": {
+        "lastModified": 1685238385,
+        "narHash": "sha256-VbpCBju89ccbu2hHxaPTMx90pdPwDmabiPxtnCjYz6E=",
+        "owner": "divnix",
+        "repo": "call-flake",
+        "rev": "0dd0760bf108571ca2aeafecb2965a8b3756fa98",
+        "type": "github"
+      },
+      "original": {
+        "owner": "divnix",
+        "repo": "call-flake",
+        "type": "github"
+      }
+    },
     "devshell": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -19,22 +34,6 @@
         "type": "github"
       }
     },
-    "flake-compat": {
-      "locked": {
-        "lastModified": 1681615974,
-        "narHash": "sha256-rEt57OJm0UbxfzaZGSBJoBMy3P62OSDKgzWW2CSqJ+8=",
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "rev": "3ae3af556f3a904774620306e2236e02deb55f6d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "edolstra",
-        "ref": "refs/pull/55/head",
-        "repo": "flake-compat",
-        "type": "github"
-      }
-    },
     "flake-utils": {
       "locked": {
         "lastModified": 1642700792,
@@ -47,6 +46,50 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "haumea": {
+      "inputs": {
+        "nixpkgs": [
+          "namaka",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1685133229,
+        "narHash": "sha256-FePm/Gi9PBSNwiDFq3N+DWdfxFq0UKsVVTJS3cQPn94=",
+        "owner": "nix-community",
+        "repo": "haumea",
+        "rev": "34dd58385092a23018748b50f9b23de6266dffc2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "v0.2.2",
+        "repo": "haumea",
+        "type": "github"
+      }
+    },
+    "namaka": {
+      "inputs": {
+        "haumea": "haumea",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1685739139,
+        "narHash": "sha256-CLGEW11Fo1v4vj0XSqiyW1EbhRZFO7dkgM43eKwItrk=",
+        "owner": "nix-community",
+        "repo": "namaka",
+        "rev": "d9a2cc83c1d0f68bd613f1fc909d0ef2cfffcf2e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "v0.2.0",
+        "repo": "namaka",
         "type": "github"
       }
     },
@@ -84,11 +127,11 @@
     },
     "nosys": {
       "locked": {
-        "lastModified": 1668010795,
-        "narHash": "sha256-JBDVBnos8g0toU7EhIIqQ1If5m/nyBqtHhL3sicdPwI=",
+        "lastModified": 1685411599,
+        "narHash": "sha256-+W6yxZXJwta1zIruKMmXwayLZvqLjRZ7L/VnQFNyRJw=",
         "owner": "divnix",
         "repo": "nosys",
-        "rev": "feade0141487801c71ff55623b421ed535dbdefa",
+        "rev": "6e168298ce2f9aa9fc6ef85ded56b07f41d90d18",
         "type": "github"
       },
       "original": {
@@ -99,8 +142,9 @@
     },
     "root": {
       "inputs": {
+        "call-flake": "call-flake",
         "devshell": "devshell",
-        "flake-compat": "flake-compat",
+        "namaka": "namaka",
         "nixpkgs": "nixpkgs_2",
         "nosys": "nosys"
       }

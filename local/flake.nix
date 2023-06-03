@@ -2,14 +2,18 @@
   description = "Paisano Core development shell";
   inputs.nosys.url = "github:divnix/nosys";
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+  inputs.namaka = {
+    url = "github:nix-community/namaka/v0.2.0";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
   inputs.devshell.url = "github:numtide/devshell";
-  inputs.flake-compat.url = "github:edolstra/flake-compat?ref=refs/pull/55/head";
+  inputs.call-flake.url = "github:divnix/call-flake";
   outputs = inputs @ {
     nosys,
-    flake-compat,
+    call-flake,
     ...
   }:
-    nosys ((flake-compat ../.).inputs // inputs) (
+    nosys ((call-flake ../.).inputs // inputs) (
       {
         self,
         namaka,
@@ -45,6 +49,35 @@
                 }
               ];
             };
+          };
+
+          checks = namaka.lib.load {
+            src = ../tests;
+            inputs =
+              {
+                inherit
+                  (call-flake ../.)
+                  # soil
+                  
+                  winnow
+                  harvest
+                  pick
+                  # grow
+                  
+                  grow
+                  growOn
+                  ;
+              }
+              # simulate 'inputs'
+              // {
+                inputs = {
+                  inherit nixpkgs;
+                  self.sourceInfo = {
+                    outPath = "constant-self";
+                    rev = "constant-rev";
+                  };
+                };
+              };
           };
         }
     );
