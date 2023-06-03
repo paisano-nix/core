@@ -59,7 +59,7 @@
           apex = (sprout args).grow;
           reg = registry args apex;
         in
-          apex // reg;
+          apex // {__std = reg;};
         inherit (import ./grow {inherit l deSystemize paths types;}) grow growOn;
       };
   in
