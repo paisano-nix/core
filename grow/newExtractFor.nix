@@ -37,22 +37,17 @@ This file implements an extractor that feeds the registry.
               ---
               ${l.generators.toPretty {} (l.removeAttrs cellBlock ["__functor"])}
             ''
-          else
-            {
-              inherit name;
-              cell = cellName;
-              block = cellBlock.name;
-              blockType = cellBlock.type;
-              inherit action;
-              targetDrv = command.targetDrv or target.drvPath or null; # can be null: nomad mainfests only hold data
-              actionDrv = command.drvPath;
-            }
-            // (
-              l.optionalAttrs (action' ? proviso) {inherit (action') proviso;}
-            )
-            // (
-              l.optionalAttrs (action' ? meta) {inherit (action') meta;}
-            )
+          else {
+            inherit name;
+            cell = cellName;
+            block = cellBlock.name;
+            blockType = cellBlock.type;
+            inherit action;
+            targetDrv = command.targetDrv or target.drvPath or null; # can be null: nomad mainfests only hold data
+            actionDrv = command.drvPath;
+            proviso = action'.proviso or null;
+            meta = action'.meta or null;
+          }
         )
       )
       cellBlock.ci
@@ -72,6 +67,6 @@ in {
         })
         actions';
     }
-    // (l.optionalAttrs (l.pathExists tPath.readme) {inherit (tPath) readme;})
-    // (l.optionalAttrs (target ? meta && target.meta ? description) {inherit (target.meta) description;});
+    // l.optionalAttrs (l.pathExists tPath.readme) {inherit (tPath) readme;}
+    // l.optionalAttrs (target ? meta && target.meta ? description) {inherit (target.meta) description;};
 }
