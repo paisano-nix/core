@@ -1,0 +1,145 @@
+#pretty
+{
+  __schema = "v0";
+  actions = {
+    aarch64-linux = {
+      bar = {
+        block = {
+          b = {
+            foo-action = <derivation foo-action-command>;
+          };
+          c = {
+            foo-action = <derivation foo-action-command>;
+          };
+        };
+      };
+    };
+    x86_64-linux = {
+      bar = {
+        block = {
+          b = {
+            foo-action = <derivation foo-action-command>;
+          };
+          c = {
+            foo-action = <derivation foo-action-command>;
+          };
+        };
+      };
+    };
+  };
+  cellsFrom = "__fixture";
+  ci = {
+    aarch64-linux = [
+      {
+        action = "foo-action";
+        actionDrv = "/nix/store/vw6pn4q6naczjcjfww3d62i56hdwvn3g-foo-action-command.drv";
+        block = "block";
+        blockType = "block-type";
+        cell = "bar";
+        meta = null;
+        name = "b";
+        proviso = null;
+        targetDrv = null;
+      }
+      {
+        action = "foo-action";
+        actionDrv = "/nix/store/vw6pn4q6naczjcjfww3d62i56hdwvn3g-foo-action-command.drv";
+        block = "block";
+        blockType = "block-type";
+        cell = "bar";
+        meta = null;
+        name = "c";
+        proviso = null;
+        targetDrv = null;
+      }
+    ];
+    x86_64-linux = [
+      {
+        action = "foo-action";
+        actionDrv = "/nix/store/mgx2f363kv113s2fb004073bm813h89x-foo-action-command.drv";
+        block = "block";
+        blockType = "block-type";
+        cell = "bar";
+        meta = null;
+        name = "b";
+        proviso = null;
+        targetDrv = null;
+      }
+      {
+        action = "foo-action";
+        actionDrv = "/nix/store/mgx2f363kv113s2fb004073bm813h89x-foo-action-command.drv";
+        block = "block";
+        blockType = "block-type";
+        cell = "bar";
+        meta = null;
+        name = "c";
+        proviso = null;
+        targetDrv = null;
+      }
+    ];
+  };
+  init = {
+    aarch64-linux = [
+      {
+        cell = "bar";
+        cellBlocks = [
+          {
+            blockType = "block-type";
+            cellBlock = "block";
+            targets = [
+              {
+                actions = [
+                  {
+                    description = "paisano foo action";
+                    name = "foo-action";
+                  }
+                ];
+                name = "b";
+              }
+              {
+                actions = [
+                  {
+                    description = "paisano foo action";
+                    name = "foo-action";
+                  }
+                ];
+                name = "c";
+              }
+            ];
+          }
+        ];
+      }
+    ];
+    x86_64-linux = [
+      {
+        cell = "bar";
+        cellBlocks = [
+          {
+            blockType = "block-type";
+            cellBlock = "block";
+            targets = [
+              {
+                actions = [
+                  {
+                    description = "paisano foo action";
+                    name = "foo-action";
+                  }
+                ];
+                name = "b";
+              }
+              {
+                actions = [
+                  {
+                    description = "paisano foo action";
+                    name = "foo-action";
+                  }
+                ];
+                name = "c";
+              }
+            ];
+          }
+        ];
+      }
+    ];
+  };
+}
