@@ -31,7 +31,7 @@ in
       {
         blockType = type;
         cellBlock = getBlock cr;
-        targets = builtins.trace c c;
+        targets = c;
       }
       // (optionalAttrs (readme != null) {inherit readme;});
     onTargets = cr: target: let
