@@ -2,14 +2,10 @@
   lib,
   super,
 }: let
-  inherit (lib) nameValuePair mapAttrsToList mapNullable;
+  inherit (lib) mapAttrsToList mapNullable;
   inherit (super) resolveActions;
-  inherit (super.api) cellBlocks;
   inherit
     (super.mapOverPaisanoTree)
-    getSystem
-    getCell
-    getBlock
     getTarget
     ;
 in

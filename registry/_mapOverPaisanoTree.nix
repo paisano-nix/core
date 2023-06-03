@@ -31,7 +31,7 @@ in {
   # assert (isFunction onCells) "onCells must be a function consuming it's own children";
   # assert (isFunction onBlocks) "onBlocks must be a function consuming it's own children";
   # assert isFuncion onTargets "onTargets must not be a function as it ends recursion";
-    mapOverTree (cursor: children: value: (
+    mapOverTree (cursor: (
       if isSystem cursor
       then onSystems cursor
       else if isCell cursor

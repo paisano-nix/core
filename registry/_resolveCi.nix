@@ -19,7 +19,7 @@ in
   in
     mapNullable (
       mapAttrsToList (
-        name: let
+        name: _: let
           action = actions.${name};
           # action = types.ActionCommand "Action \"${action'.name}\" of Cell Block \"${cellBlock.name}\" (Cell Block Type: \"${cellBlock.type}\")" action'.command;
         in
@@ -30,8 +30,8 @@ in
             blockType = type;
             name = getTarget cursor; # TODO: cleanup
             action = name; # TODO: cleanup
-            targetDrv = action.targetDrv or target.drvPath or null; # can be null for e.g. data
-            actionDrv = action.drvPath;
+            targetDrv = action.command.targetDrv or target.drvPath or null; # can be null for e.g. data
+            actionDrv = action.command.drvPath;
             proviso = action.proviso or null;
             meta = action.meta or null;
           }

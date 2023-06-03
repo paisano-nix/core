@@ -15,28 +15,31 @@
     ;
 in
   mapOverPaisanoTree {
-    onSystems = _: c: _: attrValues c;
-    onCells = cr: c: _: {
-      cell = getCell cr;
-      cellBlocks = c;
+    onSystems = _: _: c: attrValues c;
+    onCells = cr: _: c: let
       readme = findFirst pathExists null (getReadmes cr);
-    };
-    onBlocks = cr: c: _: let
+    in
+      {
+        cell = getCell cr;
+        cellBlocks = attrValues c;
+      }
+      // (optionalAttrs (readme != null) {inherit readme;});
+    onBlocks = cr: _: c: let
       inherit (cellBlocks.${getBlock cr}) type;
-    in {
-      blockType = type;
-      cellBlock = getBlock cr;
-      targets = c;
       readme = findFirst pathExists null (getReadmes cr);
-    };
-    onTargets = cr: _: target: let
-      init = resolveInit cr;
-      readme = getReadmes cr;
+    in
+      {
+        blockType = type;
+        cellBlock = getBlock cr;
+        targets = builtins.trace c c;
+      }
+      // (optionalAttrs (readme != null) {inherit readme;});
+    onTargets = cr: target: let
+      init = resolveInit cr target;
+      readme = findFirst pathExists null (getReadmes cr);
     in
       init
-      // {
-        readme = findFirst pathExists null (getReadmes cr);
-      }
+      // (optionalAttrs (readme != null) {inherit readme;})
       // (optionalAttrs (target ? meta && target.meta ? description) {inherit (target.meta) description;});
   }
   apex

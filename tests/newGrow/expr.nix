@@ -8,7 +8,8 @@ _grow {
   cellBlocks = [
     {
       name = "test-block";
-      type = "test-block";
+      type = "test-block-type";
+      ci.foo-action = true;
       actions = {
         currentSystem,
         fragment, # sometimes needed when direct invocation on drv is not possible
@@ -18,8 +19,8 @@ _grow {
         with inputs.nixpkgs.legacyPackages.${currentSystem}; [
           {
             name = "foo-action";
-            description = "paisano foo";
-            command = pkgs.writeShellScript "foo-action" ''
+            description = "paisano foo action";
+            command = writeShellScript "foo-action-command" ''
               echo "I'm Paisano and 42!"
             '';
           }

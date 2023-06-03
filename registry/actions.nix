@@ -3,14 +3,14 @@
   super,
   apex,
 }: let
-  inherit (lib) mapAttrs;
+  inherit (lib) mapAttrs id;
   inherit (super) mapOverPaisanoTree resolveActions;
 in
   mapOverPaisanoTree {
-    onSystems = _: c: _: c;
-    onCells = _: c: _: c;
-    onBlocks = _: c: _: c;
-    onTargets = cr: _: target:
+    onSystems = _: _: id;
+    onCells = _: _: id;
+    onBlocks = _: _: id;
+    onTargets = cr: target:
       mapAttrs (_: a: a.command)
       (resolveActions cr target);
   }
