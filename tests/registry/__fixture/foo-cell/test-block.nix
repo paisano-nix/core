@@ -1,6 +1,6 @@
 {
   inputs,
-  cell,
+  scope,
 }: {
   self = "via foo-cell ${inputs.self}";
   cellsNamesAndSystemsCrossCompilationEscapeHatch = builtins.attrNames inputs.cells;

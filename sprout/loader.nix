@@ -19,7 +19,7 @@ in
     apex,
   }: let
     contract = {
-      cell = super;
+      scope = super;
       inputs =
         mkInputs system
         // {
@@ -32,7 +32,7 @@ in
     path:
       lib.pipe path [
         (lib.scopedImport contract)
-        (types.Block "paisano/import: ${path}")
+        (types.Scope "paisano/import: ${toString path}")
         (lib.toFunction) # may be a set
         (f: f contract) # or has contract signature
       ]

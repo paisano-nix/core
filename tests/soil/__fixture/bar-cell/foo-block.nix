@@ -1,6 +1,6 @@
 {
   inputs,
-  cell,
+  scope,
 }: {
   fxr = "fxr";
   fxa = "fxa";

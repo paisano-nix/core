@@ -1,6 +1,6 @@
 {
   inputs,
-  cell,
+  scope,
 }: {
   foo = "foo";
   fox = "fox";

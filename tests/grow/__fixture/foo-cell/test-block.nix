@@ -1,6 +1,6 @@
 {
   inputs,
-  cell,
+  scope,
 }: {
   self = "foo-cell ${inputs.self}";
   cells = builtins.attrNames inputs.cells;
