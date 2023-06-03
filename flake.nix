@@ -54,13 +54,13 @@
 
     exports =
       soil
-      // {
-        _grow = args: let
+      // rec {
+        grow = args: let
           apex = (sprout args).grow;
           reg = registry args apex;
         in
           apex // {__std = reg;};
-        inherit (import ./grow {inherit l deSystemize paths types;}) grow growOn;
+        growOn = import ./grow-on.nix {inherit l grow;};
       };
   in
     exports
