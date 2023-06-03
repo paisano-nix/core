@@ -150,10 +150,6 @@
             {
               ci = l.mapAttrsToList (_: set: set.ci) extracted;
             }
-            # __std.ci'
-            {
-              ci' = l.mapAttrsToList (_: set: set.ci') extracted;
-            }
           ];
         res = accumulate (l.map loadCellBlock cellBlocks');
       in [
@@ -172,10 +168,6 @@
         # __std.ci
         {
           inherit (res) ci;
-        }
-        # __std.ci'
-        {
-          inherit (res) ci';
         }
       ]; # };
       res = accumulate (l.map loadCellFor cells');
@@ -198,15 +190,6 @@
           }
         ];
       }
-      # __std.ci'
-      {
-        ci' = [
-          {
-            name = system;
-            value = res.ci';
-          }
-        ];
-      }
     ];
     res = accumulate (l.map loadOutputFor systems');
   in
@@ -215,7 +198,6 @@
       // {
         __std.__schema = "v0";
         __std.ci = l.listToAttrs res.ci;
-        __std.ci' = l.listToAttrs res.ci';
         __std.init = l.listToAttrs res.init;
         __std.actions = res.actions;
         __std.cellsFrom = l.baseNameOf cellsFrom;
