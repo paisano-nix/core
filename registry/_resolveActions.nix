@@ -14,7 +14,7 @@
   getFragmentRelPath = cr: ''${concatStringsSep "/" cr}'';
 in
   cursor: target: let
-    actions = (cellBlocks.${getBlock cursor}).actions or (_: []);
+    actions = (cellBlocks.${getBlock cursor} or {actions = _: [];}).actions or (_: []);
     system = getSystem cursor;
     fragment = getFragment cursor;
     fragmentRelPath = getFragmentRelPath cursor;

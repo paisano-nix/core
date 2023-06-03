@@ -8,7 +8,7 @@
   origin = key: (builtins.unsafeGetAttrPos key args).file or originFlake;
 
   systems =
-    args.system
+    args.systems
     or [
       "x86_64-linux"
       "aarch64-linux"

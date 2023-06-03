@@ -1,0 +1,66 @@
+#pretty
+{
+  __schema = "v0";
+  actions = {
+    x86_64-linux = {
+      bar = {
+        block = {
+          b = { };
+          c = { };
+        };
+      };
+      foo = {
+        block = {
+          a = { };
+          b = { };
+        };
+      };
+    };
+  };
+  cellsFrom = "__fixture";
+  ci = {
+    x86_64-linux = [ ];
+  };
+  init = {
+    x86_64-linux = [
+      {
+        cell = "bar";
+        cellBlocks = [
+          {
+            blockType = "unknown";
+            cellBlock = "block";
+            targets = [
+              {
+                actions = [ ];
+                name = "b";
+              }
+              {
+                actions = [ ];
+                name = "c";
+              }
+            ];
+          }
+        ];
+      }
+      {
+        cell = "foo";
+        cellBlocks = [
+          {
+            blockType = "unknown";
+            cellBlock = "block";
+            targets = [
+              {
+                actions = [ ];
+                name = "a";
+              }
+              {
+                actions = [ ];
+                name = "b";
+              }
+            ];
+          }
+        ];
+      }
+    ];
+  };
+}

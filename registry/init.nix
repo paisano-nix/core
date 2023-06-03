@@ -25,7 +25,7 @@ in
       }
       // (optionalAttrs (readme != null) {inherit readme;});
     onBlocks = cr: _: c: let
-      inherit (cellBlocks.${getBlock cr}) type;
+      inherit (cellBlocks.${getBlock cr} or {type = "unknown";}) type;
       readme = findFirst pathExists null (getReadmes cr);
     in
       {

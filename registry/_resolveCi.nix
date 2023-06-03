@@ -14,7 +14,15 @@
     ;
 in
   cursor: target: let
-    inherit (cellBlocks.${getBlock cursor}) ci type;
+    inherit
+      (cellBlocks.${getBlock cursor}
+        or {
+          type = "unknown";
+          ci = null;
+        })
+      ci
+      type
+      ;
     actions = resolveActions cursor target;
   in
     mapNullable (
