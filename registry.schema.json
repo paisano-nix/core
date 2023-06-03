@@ -16,33 +16,23 @@
       "description": "Relative path to the repository root from which cells are discovered.",
       "type": "string"
     },
-    "ci": { "$ref": "#/definitions/ci" },
-    "ci'": { "$ref": "#/definitions/ci-prime" },
-    "init": { "$ref": "#/definitions/init" },
-    "actions": { "$ref": "#/definitions/actions" }
-  },
-  "required": ["__schema", "ci", "ci'", "init", "actions", "cellsFrom"],
-
-  "$defs": {
-    "ci-task": {
-      "title": "CI Task w/o Drvs",
-      "description": "A representation of a CI task's metadata.",
-      "type": "object",
-      "properties": {
-        "action": {
-          "type": "string",
-          "description": "The name of the action."
-        },
-        "block": { "type": "string", "description": "The block name." },
-        "blockType": { "type": "string", "description": "The block type." },
-        "cell": { "type": "string", "description": "The cell name." },
-        "name": { "type": "string", "description": "The target name." }
-      },
-      "required": ["action", "block", "blockType", "cell", "name"]
+    "ci": {
+      "$ref": "#/definitions/ci"
     },
-    "ci-task-prime": {}
+    "init": {
+      "$ref": "#/definitions/init"
+    },
+    "actions": {
+      "$ref": "#/definitions/actions"
+    }
   },
-
+  "required": [
+    "__schema",
+    "ci",
+    "init",
+    "actions",
+    "cellsFrom"
+  ],
   "definitions": {
     "actions": {
       "title": "Actions",
@@ -86,28 +76,46 @@
           "title": "Cell",
           "description": "The representational data of a cell.",
           "type": "object",
-          "required": ["cell", "cellBlocks"],
+          "required": [
+            "cell",
+            "cellBlocks"
+          ],
           "properties": {
-            "cell": { "type": "string" },
+            "cell": {
+              "type": "string"
+            },
             "cellBlocks": {
               "type": "array",
               "items": {
                 "title": "Block",
                 "description": "The representational data of a block.",
                 "type": "object",
-                "required": ["blockType", "cellBlock", "targets"],
+                "required": [
+                  "blockType",
+                  "cellBlock",
+                  "targets"
+                ],
                 "properties": {
-                  "blockType": { "type": "string" },
-                  "cellBlock": { "type": "string" },
+                  "blockType": {
+                    "type": "string"
+                  },
+                  "cellBlock": {
+                    "type": "string"
+                  },
                   "targets": {
                     "type": "array",
                     "items": {
                       "title": "Target",
                       "description": "The representational data of a target.",
                       "type": "object",
-                      "required": ["name", "actions"],
+                      "required": [
+                        "name",
+                        "actions"
+                      ],
                       "properties": {
-                        "name": { "type": "string" },
+                        "name": {
+                          "type": "string"
+                        },
                         "actions": {
                           "type": "array",
                           "items": {
@@ -115,8 +123,12 @@
                             "description": "The representational data of an action (w/o derivation).",
                             "type": "object",
                             "properties": {
-                              "name": { "type": "string" },
-                              "description": { "type": "string" }
+                              "name": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              }
                             }
                           }
                         }
@@ -131,52 +143,72 @@
       }
     },
     "ci": {
-      "title": "CI w/o Drvs",
-      "description": "A cheap evaluation that provides all necessary metadata without evaluating any derivations.",
+      "title": "CI",
+      "description": "An evaluation that provides all necessary metadata and evaluated derivations.",
       "type": "object",
       "additionalProperties": {
         "title": "System",
-        "type": "array",
-        "items": { "$ref": "#/$defs/ci-task" }
-      }
-    },
-    "ci-prime": {
-      "title": "CI w/ Drvs",
-      "description": "An expensive evaluation that provides all necessary metadata including evaluated derivations.",
-      "type": "object",
-      "additionalProperties": {
-        "title": "System",
+        "description": "Actions are namespaced per system as a derviation is only valid for its specified system.",
         "type": "array",
         "items": {
-          "title": "CI Task w/ Drvs",
-          "description": "A representation of a CI task that includes evaluated derviations.",
-          "allOf": [
-            { "$ref": "#/$defs/ci-task" },
-            {
-              "type": "object",
-              "title": "Drvs extension",
-              "description": "The expensive-to-evaluate derivations.",
-              "properties": {
-                "actionDrv": {
-                  "type": "string",
-                  "description": "The evaluated derivation for the action runnable."
-                },
-                "targetDrv": {
-                  "type": "string",
-                  "description": "The evaluated derivation for the target (if target is a derivation)."
-                },
-                "proviso": {
-                  "type": "string",
-                  "description": "A provisio which lets a CI cheaply decide whether running an action can be skipped."
-                },
-                "meta": {
-                  "type": "string",
-                  "description": "Arbitrary metadata needed during the priviso or discovery."
-                }
-              },
-              "required": ["actionDrv"]
+          "title": "CI Discovery Candidate",
+          "description": "A CI discovery candidate.",
+          "type": "object",
+          "required": [
+            "action",
+            "block",
+            "blockType",
+            "cell",
+            "name",
+            "actionDrv"
+          ],
+          "properties": {
+            "action": {
+              "type": "string",
+              "description": "The name of the action."
+            },
+            "block": {
+              "type": "string",
+              "description": "The block name."
+            },
+            "blockType": {
+              "type": "string",
+              "description": "The block type."
+            },
+            "cell": {
+              "type": "string",
+              "description": "The cell name."
+            },
+            "name": {
+              "type": "string",
+              "description": "The target name."
+            },
+            "actionDrv": {
+              "type": "string",
+              "description": "The evaluated derivation for the action runnable."
+            },
+            "targetDrv": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "The evaluated derivation for the target (if target is a derivation)."
+            },
+            "proviso": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "A provisio which lets a CI cheaply decide whether running an action can be skipped."
+            },
+            "meta": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Arbitrary metadata needed during the priviso or discovery."
             }
-          ]
+          }
         }
       }
     }
