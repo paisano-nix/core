@@ -15,6 +15,9 @@
           b = { };
         };
       };
+      nu-cell = {
+        nu = null;
+      };
     };
   };
   cellsFrom = "__fixture";
