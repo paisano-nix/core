@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [0.1.1](https://github.com/paisano-nix/core/compare/0.1.0..0.1.1) - 2023-06-15
+#### Bug Fixes
+- use new namaka in local flake only - ([694ed3f](https://github.com/paisano-nix/core/commit/694ed3f59f3edf9e2755e560ba1bc34e77979ed5)) - [@blaggacao](https://github.com/blaggacao)
+
+- - -
+
 ## [0.1.0](https://github.com/paisano-nix/core/compare/9b95b00f7b4ea1af1d4eb5e09b33cdf8fdc1db44..0.1.0) - 2023-06-03
 #### Bug Fixes
 - **(README)** typo - ([8bc3f43](https://github.com/paisano-nix/core/commit/8bc3f4328628df114d75974982d2440c0ef11ad1)) - Timothy DeHerrera
