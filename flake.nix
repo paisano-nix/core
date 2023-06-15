@@ -3,14 +3,6 @@
 # SPDX-License-Identifier: Unlicense
 {
   inputs.nosys.url = "github:divnix/nosys";
-  inputs.haumea = {
-    url = "github:nix-community/haumea";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-  inputs.namaka = {
-    url = "github:nix-community/namaka";
-    inputs.haumea.follows = "haumea";
-  };
   inputs.yants = {
     url = "github:divnix/yants";
     inputs.nixpkgs.follows = "nixpkgs";
@@ -20,8 +12,6 @@
 
   outputs = {
     nixpkgs,
-    haumea,
-    namaka,
     nosys,
     yants,
     self,
@@ -30,27 +20,9 @@
     deSystemize = nosys.lib.deSys;
     paths = import ./paths.nix;
     types = import ./types {inherit l yants paths;};
-    exports = {
+  in
+    {
       inherit (import ./soil {inherit l;}) pick harvest winnow;
       inherit (import ./grow {inherit l deSystemize paths types;}) grow growOn;
-    };
-  in
-    exports
-    // {
-      checks = namaka.lib.load {
-        flake = self;
-        inputs =
-          exports
-          // {
-            # simulate 'inputs'
-            inputs = {
-              inherit nixpkgs;
-              self.sourceInfo = {
-                outPath = "constant-self";
-                rev = "constant-rev";
-              };
-            };
-          };
-      };
     };
 }
