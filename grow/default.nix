@@ -1,6 +1,7 @@
 {
   l,
   deSystemize,
+  call-flake,
   paths,
   types,
 }: let
@@ -87,8 +88,14 @@
     loadOutputFor = system: let
       __extract = ___extract system;
       # Load a cell, return the flake outputs injected by std
-      _ImportSignatureFor = cell: {
-        inputs = __ImportSignatureFor system cells;
+      _ImportSignatureFor = cell: maybeWithFlake: let
+        additionalInputs = (
+          if l.pathExists maybeWithFlake
+          then (call-flake (dirOf maybeWithFlake)).inputs
+          else {}
+        );
+      in {
+        inputs = __ImportSignatureFor system cells additionalInputs;
         inherit cell;
       };
       loadCellFor = cellName: let
@@ -107,7 +114,7 @@
             block =
               Block "paisano/import: ${displayPath}"
               (l.scopedImport signature importPath);
-            signature = _ImportSignatureFor res.output; # recursion on cell
+            signature = _ImportSignatureFor res.output cellP.flake; # recursion on cell
           in
             if l.typeOf block == "set"
             then block

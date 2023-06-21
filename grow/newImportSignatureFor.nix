@@ -19,8 +19,8 @@ This file implements the unique import signature of each block.
     )
     // {inherit (cfg.inputs.nixpkgs) sourceInfo;};
 in
-  system: cells: (
-    (deSystemize system cfg.inputs)
+  system: cells: additionalInputs: (
+    (deSystemize system (cfg.inputs // additionalInputs))
     // {
       inherit self;
       cells = deSystemize system cells; # recursion on cells

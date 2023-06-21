@@ -1,6 +1,7 @@
 rec {
   cellPath = cellsFrom: cellName: {
     __toString = _: "${cellsFrom}/${cellName}";
+    flake = "${cellsFrom}/${cellName}/flake.nix";
     readme = "${cellsFrom}/${cellName}/Readme.md";
     rel = "${builtins.baseNameOf cellsFrom}/${cellName}";
   };
