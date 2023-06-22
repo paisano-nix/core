@@ -17,7 +17,7 @@ This file implements the unique import signature of each block.
       # numtide/nixpkgs-unfree blocks re-import
       else cfg.inputs.nixpkgs.legacyPackages.${system}
     )
-    // {inherit (cfg.inputs.nixpkgs) sourceInfo;};
+    // {inherit (cfg.inputs.nixpkgs) outPath sourceInfo;};
 in
   system: cells: additionalInputs: (
     (deSystemize system (cfg.inputs // additionalInputs))
