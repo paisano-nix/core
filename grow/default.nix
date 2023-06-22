@@ -91,7 +91,7 @@
       _ImportSignatureFor = cell: maybeWithFlake: let
         additionalInputs = (
           if l.pathExists maybeWithFlake
-          then (call-flake (dirOf maybeWithFlake)).inputs
+          then (call-flake (dirOf maybeWithFlake)).outputs
           else {}
         );
       in {
