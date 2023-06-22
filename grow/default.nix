@@ -105,6 +105,7 @@
           blockP = paths.cellBlockPath cellP cellBlock;
           isFile = l.pathExists blockP.file;
           isDir = l.pathExists blockP.dir;
+          signature = _ImportSignatureFor res.output cellP.flake; # recursion on cell
           import' = {
             displayPath,
             importPath,
@@ -114,7 +115,6 @@
             block =
               Block "paisano/import: ${displayPath}"
               (l.scopedImport signature importPath);
-            signature = _ImportSignatureFor res.output cellP.flake; # recursion on cell
           in
             if l.typeOf block == "set"
             then block
@@ -135,7 +135,7 @@
           imported = Target' importPaths (import' importPaths);
           # extract instatiates actions and extracts metadata for the __std registry
           targetTracer = name: l.traceVerbose "Paisano loading for ${system} ${importPaths.importPath}:${name}";
-          extracted = l.optionalAttrs (cellBlock.cli or true) (l.mapAttrs (_extract cellBlock targetTracer) imported);
+          extracted = l.optionalAttrs (cellBlock.cli or true) (l.mapAttrs (_extract cellBlock targetTracer signature.inputs) imported);
         in
           optionalLoad (isFile || isDir)
           [

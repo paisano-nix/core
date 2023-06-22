@@ -5,7 +5,7 @@ This file implements an extractor that feeds the registry.
   l,
   paths,
   types,
-}: cellsFrom: system: cellName: cellBlock: targetTracer: name: target: let
+}: cellsFrom: system: cellName: cellBlock: targetTracer: inputs: name: target: let
   tPath = paths.targetPath cellsFrom cellName cellBlock name;
   fragment = ''"${system}"."${cellName}"."${cellBlock.name}"."${name}"'';
   actions' =
@@ -14,7 +14,7 @@ This file implements an extractor that feeds the registry.
       l.listToAttrs (
         map
         (a: l.nameValuePair a.name a) (cellBlock.actions {
-          inherit target fragment;
+          inherit target fragment inputs;
           fragmentRelPath = "${cellName}/${cellBlock.name}/${name}";
           # in impure mode, detect the current system to run
           # the action's executables themselves with correct arch

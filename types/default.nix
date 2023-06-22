@@ -26,6 +26,7 @@
         ci = option (attrs bool);
         cli = option bool;
         actions = option (functionWithArgs {
+          inputs = false;
           target = false;
           fragment = false;
           fragmentRelPath = false;
