@@ -25,5 +25,6 @@
   in {
     inherit (import ./soil {inherit l;}) pick harvest winnow;
     inherit (import ./grow {inherit l deSystemize paths types call-flake;}) grow growOn;
+    isDirty = rev: rev == "not-a-commit";
   };
 }
