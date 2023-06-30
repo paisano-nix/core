@@ -6,32 +6,39 @@ This file implements the unique import signature of each block.
   deSystemize,
 }: cfg: let
   self = cfg.inputs.self.sourceInfo // {rev = cfg.inputs.self.sourceInfo.rev or "not-a-commit";};
-  instantiateNixpkgsWith = system:
+  instantiateNixpkgsWith = system: nixpkgs:
     (
       if cfg.nixpkgsConfig != {}
       then
-        (import cfg.inputs.nixpkgs {
+        (import nixpkgs {
           inherit system;
           config = cfg.nixpkgsConfig;
         })
       # numtide/nixpkgs-unfree blocks re-import
-      else cfg.inputs.nixpkgs.legacyPackages.${system}
+      else nixpkgs.legacyPackages.${system}
     )
-    // {inherit (cfg.inputs.nixpkgs) outPath sourceInfo;};
+    // {inherit (nixpkgs) outPath sourceInfo;};
 in
-  system: cells: additionalInputs: (
+  system: cells: additionalInputs: let
+    currentNixpkgs =
+      if additionalInputs ? nixpkgs
+      then additionalInputs.nixpkgs
+      else if cfg.inputs ? nixpkgs
+      then cfg.inputs.nixpkgs
+      else null;
+  in (
     (deSystemize system (cfg.inputs // additionalInputs))
     // {
       inherit self;
       cells = deSystemize system cells; # recursion on cells
     }
-    // l.optionalAttrs (cfg.inputs ? nixpkgs) {
+    // l.optionalAttrs (currentNixpkgs != null) {
       nixpkgs =
-        (instantiateNixpkgsWith system)
+        (instantiateNixpkgsWith system currentNixpkgs)
         //
         # mimick deSystemize behaviour
         (builtins.mapAttrs
-          (system: _: instantiateNixpkgsWith system)
-          cfg.inputs.nixpkgs.legacyPackages);
+          (system: _: instantiateNixpkgsWith system currentNixpkgs)
+          currentNixpkgs.legacyPackages);
     }
   )
