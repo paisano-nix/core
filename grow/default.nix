@@ -105,7 +105,18 @@
           blockP = paths.cellBlockPath cellP cellBlock;
           isFile = l.pathExists blockP.file;
           isDir = l.pathExists blockP.dir;
-          signature = _ImportSignatureFor res.output cellP.flake; # recursion on cell
+          signature = let
+            # pass through the current cell and cell block names for introspection
+            outputMeta =
+              res.output
+              // {
+                __std = {
+                  inherit cellName;
+                  cellBlockName = cellBlock.name;
+                };
+              };
+          in
+            _ImportSignatureFor outputMeta cellP.flake; # recursion on cell
           import' = {
             displayPath,
             importPath,
