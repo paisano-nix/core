@@ -110,10 +110,7 @@
             outputMeta =
               res.output
               // {
-                __std = {
-                  inherit cellName;
-                  cellBlockName = cellBlock.name;
-                };
+                __cr = [cellName cellBlock.name];
               };
           in
             _ImportSignatureFor outputMeta cellP.flake; # recursion on cell
