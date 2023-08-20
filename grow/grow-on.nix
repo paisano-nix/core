@@ -51,8 +51,43 @@ Example use:
 }
 ```
 */
+let
+  inherit (builtins) head;
+  inherit (builtins) isAttrs;
+  inherit (builtins) length;
+  inherit (l.lists) elemAt;
+  inherit (l.lists) flatten;
+  inherit (l.lists) take;
+
+  g = p: l: r: v: let
+    attrPath = take 2 p;
+    v1 = !(isAttrs l && isAttrs r);
+    v2 = if attrPath == ["__std" "ci"] || attrPath == ["__std" "init"] then flatten v else head v;
+  in [v1 v2];
+
+  recursiveUpdateUntil =
+    g:
+    lhs:
+    rhs:
+    let f = attrPath:
+      l.zipAttrsWith (n: values:
+      let
+        a = g here (elemAt values 1) (head values) values;
+        here = attrPath ++ [n];
+      in
+        if length values == 1 || head a then
+          elemAt a 1
+        else
+          f here values
+      );
+    in f [] [rhs lhs];
+  recursiveUpdate =
+    lhs:
+    rhs:
+    recursiveUpdateUntil g lhs rhs;
+in
 args:
 grow args
 // {
-  __functor = l.flip l.recursiveUpdate;
+  __functor = l.flip recursiveUpdate;
 }
