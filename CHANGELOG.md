@@ -2,6 +2,24 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [0.2.0](https://github.com/paisano-nix/core/compare/0.1.1..0.2.0) - 2024-02-22
+#### Bug Fixes
+- also do special nix instantiation for supflake nixpkgs - ([10270dc](https://github.com/paisano-nix/core/commit/10270dc46532c947de473ee88c8f5a3346a396fb)) - [@blaggacao](https://github.com/blaggacao)
+- add is dirty predicate that consumes this repo's constant - ([9683ecf](https://github.com/paisano-nix/core/commit/9683ecfbc05f8c86396f0284d7125fe1567cd8d0)) - [@blaggacao](https://github.com/blaggacao)
+- add outPath to nixpks to align with any other input - ([9954e48](https://github.com/paisano-nix/core/commit/9954e48e1ebc74a698b9d4ac02aee85514fc0237)) - [@blaggacao](https://github.com/blaggacao)
+#### Features
+- add support for require args - ([3200ca9](https://github.com/paisano-nix/core/commit/3200ca90ada493ba1b1f190d8c06336162e2d812)) - [@blaggacao](https://github.com/blaggacao)
+- implement cell block introspection - ([8025cff](https://github.com/paisano-nix/core/commit/8025cffab28f5ce3ebed74d79a2006f4865afaa2)) - Alex Zero
+- add inputs argument to actions - ([f0f5525](https://github.com/paisano-nix/core/commit/f0f5525a4e9713b775fffc592c476df2c857fec0)) - [@blaggacao](https://github.com/blaggacao)
+- take cell-level outputs for nix inputs preprocessing - ([13d1901](https://github.com/paisano-nix/core/commit/13d19011d0a327eb514d7493c8696055a6018ca1)) - [@blaggacao](https://github.com/blaggacao)
+- add cell-level flake to inject inputs - ([8143561](https://github.com/paisano-nix/core/commit/8143561bf0c4329a94c5bc464cdc15e194575206)) - [@blaggacao](https://github.com/blaggacao)
+#### Miscellaneous Chores
+- bump devshell nixpkgs - ([9e793f7](https://github.com/paisano-nix/core/commit/9e793f7ea438e1a502d317a90cf172e047f7627b)) - [@blaggacao](https://github.com/blaggacao)
+#### Refactoring
+- use cursor syntax - ([218a7f5](https://github.com/paisano-nix/core/commit/218a7f50451cbc5c981fc8dfe6f962044041f9aa)) - Alex Zero
+
+- - -
+
 ## [0.1.1](https://github.com/paisano-nix/core/compare/0.1.0..0.1.1) - 2023-06-15
 #### Bug Fixes
 - use new namaka in local flake only - ([694ed3f](https://github.com/paisano-nix/core/commit/694ed3f59f3edf9e2755e560ba1bc34e77979ed5)) - [@blaggacao](https://github.com/blaggacao)
