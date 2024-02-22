@@ -64,6 +64,10 @@ in {
         l.mapAttrsToList (name: a: {
           inherit name;
           inherit (a) description;
+          requiresArgs =
+            if (target ? meta && target.meta ? requiresArgs)
+            then (builtins.elem name target.meta.requiresArgs)
+            else false;
         })
         actions';
     }
